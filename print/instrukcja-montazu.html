@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Makropad BLE — instrukcja montażu</title>
+<style>
+@page { size: A4; margin: 15mm 14mm 16mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Carlito", "DejaVu Sans", sans-serif; font-size: 10.5pt; line-height: 1.5; color: #1b1b19; margin: 0; }
+h1 { font-size: 26pt; line-height: 1.15; margin: 0 0 6px; font-weight: 700; letter-spacing: -0.5px; }
+h2 { font-size: 15pt; margin: 0 0 10px; font-weight: 700; color: #0f3b30; border-bottom: 2px solid #0f3b30; padding-bottom: 5px; }
+h3 { font-size: 11.5pt; margin: 16px 0 5px; font-weight: 700; }
+p { margin: 0 0 7px; }
+ul, ol { margin: 0 0 8px; padding-left: 19px; }
+li { margin-bottom: 3px; }
+code, .mono { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; background: #f0efe9; padding: 0 3px; border-radius: 2px; }
+.page-break { page-break-before: always; }
+.avoid { page-break-inside: avoid; }
+
+.cover { height: 246mm; display: flex; flex-direction: column; justify-content: space-between; }
+.cover-top { padding-top: 26mm; }
+.eyebrow { font-size: 10pt; letter-spacing: 2.5px; text-transform: uppercase; color: #6b6a63; margin-bottom: 14px; }
+.cover-sub { font-size: 13pt; color: #4a4a45; margin-top: 14px; max-width: 135mm; line-height: 1.45; }
+.cover-facts { border-top: 2px solid #1b1b19; padding-top: 12px; display: flex; gap: 0; }
+.fact { flex: 1; }
+.fact .k { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 1px; color: #6b6a63; }
+.fact .v { font-size: 12pt; font-weight: 700; }
+
+.step { page-break-inside: avoid; margin-bottom: 15px; border-left: 3px solid #d8d6cc; padding-left: 13px; }
+.step-h { display: flex; align-items: baseline; gap: 9px; margin-bottom: 5px; }
+.step-n { font-size: 9.5pt; font-weight: 700; color: #fff; background: #0f3b30; border-radius: 11px; padding: 1px 9px; white-space: nowrap; }
+.step-t { font-size: 12pt; font-weight: 700; }
+.check { background: #eaf3ee; border-left: 3px solid #1d7d5f; padding: 6px 10px; margin: 7px 0 0; font-size: 9.5pt; }
+.check b { color: #0f3b30; }
+.warn { background: #fdf0e8; border-left: 3px solid #c8622f; padding: 6px 10px; margin: 7px 0 0; font-size: 9.5pt; }
+.warn b { color: #94441c; }
+.danger { background: #fceceb; border: 1.5px solid #c23b37; border-radius: 4px; padding: 11px 13px; margin: 12px 0; }
+.danger b { color: #96201d; }
+
+table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 8px 0 12px; }
+th { background: #0f3b30; color: #fff; text-align: left; padding: 5px 7px; font-weight: 700; font-size: 9pt; }
+td { padding: 4px 7px; border-bottom: 0.5px solid #d8d6cc; vertical-align: top; }
+tr:nth-child(even) td { background: #f7f6f1; }
+.tc { text-align: center; }
+
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; border: 0.5px solid #999; vertical-align: -1px; margin-right: 5px; }
+.fig { margin: 12px 0 14px; page-break-inside: avoid; }
+.fig svg { width: 100%; height: auto; display: block; }
+.figcap { font-size: 9pt; color: #6b6a63; margin-top: 4px; font-style: italic; }
+pre { background: #f7f6f1; border: 0.5px solid #d8d6cc; border-radius: 4px; padding: 9px 11px; font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; line-height: 1.38; overflow: hidden; white-space: pre-wrap; margin: 8px 0; }
+.two { display: flex; gap: 14px; }
+.two > div { flex: 1; }
+.lead { font-size: 11pt; color: #4a4a45; margin-bottom: 14px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-top">
+    <div class="eyebrow">Instrukcja montażu · wersja 1.0</div>
+    <h1>Makropad&nbsp;BLE<br>10&nbsp;klawiszy&nbsp;+&nbsp;enkoder</h1>
+    <div class="cover-sub">Krok po kroku, od rozpakowania części do zamknięcia obudowy. Napisane dla osoby, która pierwszy raz bierze do ręki lutownicę — każdy krok ma opis wykonania, sposób sprawdzenia i najczęstszy błąd.</div>
+  </div>
+  <div>
+    <div class="fig">
+      <svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="20" width="580" height="210" rx="14" fill="#f7f6f1" stroke="#c9c7bd" stroke-width="1"/>
+        <g fill="#e7e5db" stroke="#0f3b30" stroke-width="1">
+          <rect x="60" y="128" width="62" height="62" rx="6"/><rect x="142" y="128" width="62" height="62" rx="6"/>
+          <rect x="224" y="128" width="62" height="62" rx="6"/><rect x="306" y="128" width="62" height="62" rx="6"/>
+          <rect x="388" y="128" width="62" height="62" rx="6"/>
+          <rect x="60" y="46" width="62" height="62" rx="6"/><rect x="142" y="46" width="62" height="62" rx="6"/>
+          <rect x="224" y="46" width="62" height="62" rx="6"/><rect x="306" y="46" width="62" height="62" rx="6"/>
+          <rect x="388" y="46" width="62" height="62" rx="6"/>
+        </g>
+        <rect x="466" y="46" width="112" height="46" rx="5" fill="#0f3b30"/>
+        <text x="522" y="74" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#eaf3ee" text-anchor="middle">OLED</text>
+        <circle cx="522" cy="150" r="30" fill="#e7e5db" stroke="#0f3b30" stroke-width="1"/>
+        <circle cx="522" cy="150" r="11" fill="#0f3b30"/>
+      </svg>
+    </div>
+    <div class="cover-facts">
+      <div class="fact"><div class="k">Czas</div><div class="v">4–6 h</div></div>
+      <div class="fact"><div class="k">Trudność</div><div class="v">Średnia</div></div>
+      <div class="fact"><div class="k">Kroki</div><div class="v">20</div></div>
+      <div class="fact"><div class="k">Lutów</div><div class="v">ok. 60</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+<h2>Zanim weźmiesz lutownicę</h2>
+
+<div class="danger">
+<b>Akumulator litowo-polimerowy to jedyny element, który może zrobić Ci krzywdę.</b> Zapamiętaj cztery zasady i trzymaj się ich bez wyjątku:
+<ul style="margin-top:6px;margin-bottom:0">
+<li>Akumulator podłączasz <b>na samym końcu</b> — dopiero gdy cały układ przejdzie test na USB. Do tego momentu leży w szufladzie, z dala od stanowiska.</li>
+<li><b>Nigdy nie dotykaj lutownicą przewodów akumulatora, gdy są ze sobą połączone.</b> Jeśli musisz je skrócić, tniesz <b>po jednym</b>, a odcięty koniec od razu zaklejasz taśmą.</li>
+<li>Czerwony i czarny nie mogą się zetknąć nawet na ułamek sekundy. Zwarcie ogniwa 1500 mAh to iskra, dym i realne ryzyko pożaru.</li>
+<li>Jeśli ogniwo spuchnie, zrobi się gorące albo zacznie dziwnie pachnieć — odłącz je, wynieś na zewnątrz na niepalne podłoże i nie używaj więcej.</li>
+</ul>
+</div>
+
+<p>Poza tym: lutownica ma na grocie 320–350&nbsp;°C i wygląda tak samo, gdy jest zimna i gdy jest gorąca. Odkładaj ją zawsze na podstawkę, nigdy na blat. Pracuj w przewietrzanym pomieszczeniu — dym z kalafonii nie jest trujący, ale drażni oczy i drogi oddechowe.</p>
+
+<h3>Słowniczek — pięć pojęć, które wystarczą</h3>
+<table>
+<tr><th style="width:22%">Pojęcie</th><th>Co to znaczy w praktyce</th></tr>
+<tr><td><b>GND / masa</b></td><td>Wspólny „minus" całego układu. Wszystkie elementy muszą być do niej podpięte, inaczej nic nie działa. W tym projekcie masa jest czarna.</td></tr>
+<tr><td><b>3V3</b></td><td>Zasilanie 3,3&nbsp;V, czyli „plus" dla modułów. Wychodzi z pinu <code>3V3</code> płytki XIAO. W tym projekcie czerwony.</td></tr>
+<tr><td><b>I²C</b></td><td>Dwa przewody (<code>SDA</code> i <code>SCL</code>), po których XIAO rozmawia z wyświetlaczem i ekspanderem. Oba układy wiszą na tej samej parze — to normalne, każdy ma swój numer (adres).</td></tr>
+<tr><td><b>Pad / pole lutownicze</b></td><td>Metalowy kwadracik albo otwór na płytce, do którego lutujesz przewód. Obok zwykle jest napisana nazwa sygnału.</td></tr>
+<tr><td><b>Cynowanie</b></td><td>Pokrycie gołego końca przewodu cyną, zanim przylutujesz go do płytki. Bez tego przewód się strzępi i lut się nie chwyta.</td></tr>
+</table>
+
+<h3>Lista części</h3>
+<table>
+<tr><th style="width:6%">#</th><th style="width:44%">Element</th><th style="width:12%">Ile</th><th>Uwagi</th></tr>
+<tr><td>1</td><td>Seeed XIAO nRF52840 (BLE)</td><td>1</td><td>Mózg całości, ma wbudowaną ładowarkę Li-Po</td></tr>
+<tr><td>2</td><td>Moduł PCF8574</td><td>1</td><td>Bez zworek i goldpinów — tak jak masz</td></tr>
+<tr><td>3</td><td>Wyświetlacz OLED 0,91" SSD1306 I²C</td><td>1</td><td>128 × 32 piksele, adres 0x3C</td></tr>
+<tr><td>4</td><td>Enkoder KY-040</td><td>1</td><td>Bez goldpinów</td></tr>
+<tr><td>5</td><td>Przełączniki mechaniczne MX</td><td>10</td><td>Do wycięć 14 × 14 mm</td></tr>
+<tr><td>6</td><td>Keycapy</td><td>10</td><td>Raster w obudowie to 20 mm</td></tr>
+<tr><td>7</td><td>Przełącznik suwakowy SS12C40</td><td>1</td><td>Trzy nóżki, używasz dwóch</td></tr>
+<tr><td>8</td><td>Akumulator Li-Po LP803450 1500 mAh</td><td>1</td><td>Z zabezpieczeniem PCM i wtykiem JST 2,54</td></tr>
+<tr><td>9</td><td>Wydruk: <span class="mono">Dol.stl</span> i <span class="mono">Lid_final.stl</span></td><td>1 kpl.</td><td>Sprawdź, czy wycięcia 14 × 14 mm nie są zarośnięte</td></tr>
+</table>
+
+<h3>Materiały do dokupienia</h3>
+<table>
+<tr><th style="width:44%">Materiał</th><th style="width:12%">Ile</th><th>Po co</th></tr>
+<tr><td>Przewód silikonowy 30 AWG, min. 4 kolory</td><td>ok. 5 m</td><td>Cała wiązka. Silikon, nie PVC — musi być miękki, bo inaczej sam otworzy obudowę</td></tr>
+<tr><td>Przewód silikonowy 26 AWG, czerwony i czarny</td><td>2 × 20 cm</td><td>Ewentualne przedłużenie akumulatora i wyłącznik</td></tr>
+<tr><td>Wtopki mosiężne M3 (otwór 4,2 mm, dł. 4–5 mm)</td><td>2</td><td>Gwint w wydruku pod śruby</td></tr>
+<tr><td>Śruby M3 × 10 mm z łbem stożkowym</td><td>2</td><td>Skręcenie obudowy</td></tr>
+<tr><td>Koszulki termokurczliwe 1,5 mm i 2,5 mm</td><td>po 30 cm</td><td>Izolacja połączeń, zwłaszcza przy akumulatorze</td></tr>
+<tr><td>Taśma Kaptonowa lub izolacyjna, wąska</td><td>1 rolka</td><td>Sklejanie wiązki w płaską taśmę</td></tr>
+<tr><td>Gniazdo JST XH 2,54 2-pin z przewodami</td><td>1</td><td>Opcjonalnie — żeby dało się odpiąć akumulator</td></tr>
+<tr><td>Kondensatory ceramiczne 100 nF</td><td>2</td><td>Opcjonalnie — wygładzają sygnał z enkodera</td></tr>
+<tr><td>Klej na gorąco / taśma dwustronna</td><td>—</td><td>Mocowanie modułów i kotwiczenie wiązki</td></tr>
+</table>
+
+<h3>Narzędzia</h3>
+<p>Lutownica z cienkim grotem (najlepiej z regulacją temperatury), cyna 0,5–0,7&nbsp;mm z topnikiem, ściągacz izolacji lub ostry nożyk, pęseta, obcinaczki boczne, <b>multimetr z brzęczykiem</b> (to nie jest opcja — bez niego szukanie błędu potrwa godziny), zapalniczka lub opalarka do koszulek, pistolet na klej, kabel USB-C <b>z transmisją danych</b> (kabel „tylko do ładowania" nie zadziała i zmarnujesz na to pół wieczoru).</p>
+
+<div class="page-break"></div>
+<h2>Jak to ma być połączone</h2>
+<p class="lead">Zanim zaczniesz, przejrzyj oba rysunki. Nie musisz ich rozumieć w całości — wrócisz do nich przy konkretnych krokach. Ważne, żebyś wiedział, że one tu są.</p>
+
+<div class="fig">
+<svg viewBox="0 0 680 600" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#0f3b30" stroke-width="1">
+<rect x="40" y="175" width="165" height="70" rx="8" fill="#eef0ec"/>
+<rect x="40" y="307" width="165" height="56" rx="8" fill="#fbf0df"/>
+<rect x="40" y="400" width="165" height="64" rx="8" fill="#fbf0df"/>
+<rect x="248" y="130" width="180" height="300" rx="8" fill="#e9e8f6"/>
+<rect x="470" y="165" width="170" height="85" rx="8" fill="#eef0ec"/>
+<rect x="470" y="285" width="170" height="64" rx="8" fill="#eef0ec"/>
+<rect x="470" y="375" width="170" height="70" rx="8" fill="#e9e8f6"/>
+<rect x="470" y="475" width="170" height="64" rx="8" fill="#eef0ec"/>
+</g>
+<g font-family="DejaVu Sans, sans-serif" fill="#1b1b19" text-anchor="middle">
+<text x="122" y="202" font-size="14" font-weight="bold">Klawisze 9–10</text><text x="122" y="224" font-size="12" fill="#5a5a54">sygnał + masa</text>
+<text x="122" y="330" font-size="14" font-weight="bold">SS12C40</text><text x="122" y="350" font-size="12" fill="#5a5a54">w torze BAT+</text>
+<text x="122" y="427" font-size="14" font-weight="bold">Li-Po 3,7 V</text><text x="122" y="448" font-size="12" fill="#5a5a54">1500 mAh, PCM</text>
+<text x="338" y="159" font-size="14" font-weight="bold">XIAO nRF52840</text><text x="338" y="179" font-size="12" fill="#5a5a54">MCU + ładowarka</text>
+<text x="555" y="196" font-size="14" font-weight="bold">KY-040</text><text x="555" y="219" font-size="12" fill="#5a5a54">CLK, DT, SW, +, GND</text>
+<text x="555" y="312" font-size="14" font-weight="bold">OLED SSD1306</text><text x="555" y="333" font-size="12" fill="#5a5a54">I²C, adres 0x3C</text>
+<text x="555" y="404" font-size="14" font-weight="bold">PCF8574</text><text x="555" y="426" font-size="12" fill="#5a5a54">8 wejść + INT</text>
+<text x="555" y="502" font-size="14" font-weight="bold">Klawisze 1–8</text><text x="555" y="523" font-size="12" fill="#5a5a54">do P0–P7</text>
+</g>
+<g font-family="DejaVu Sans Mono, monospace" font-size="11" fill="#3a3a36">
+<text x="258" y="204">D6</text><text x="258" y="226">D7</text><text x="258" y="339">BAT+</text><text x="258" y="369">BAT−</text>
+<text x="418" y="204" text-anchor="end">D0</text><text x="418" y="226" text-anchor="end">D1</text><text x="418" y="248" text-anchor="end">D2</text>
+<text x="418" y="304" text-anchor="end">3V3</text><text x="418" y="322" text-anchor="end">GND</text><text x="418" y="340" text-anchor="end">D4 SDA</text>
+<text x="418" y="358" text-anchor="end">D5 SCL</text><text x="418" y="394" text-anchor="end">D3</text>
+</g>
+<g stroke-width="1.6" fill="none">
+<line x1="205" y1="200" x2="246" y2="200" stroke="#6a5fc6"/>
+<line x1="205" y1="222" x2="246" y2="222" stroke="#6a5fc6"/>
+<line x1="205" y1="335" x2="246" y2="335" stroke="#c8622f"/>
+<line x1="122" y1="400" x2="122" y2="363" stroke="#c8622f"/>
+<path d="M205 432 H228 V365 H246" stroke="#c8622f"/>
+<line x1="430" y1="200" x2="470" y2="200" stroke="#6a5fc6"/>
+<line x1="430" y1="222" x2="470" y2="222" stroke="#6a5fc6"/>
+<line x1="430" y1="244" x2="470" y2="244" stroke="#6a5fc6"/>
+<path d="M430 390 H442 V435 H470" stroke="#6a5fc6" stroke-dasharray="4 3"/>
+</g>
+<path d="M430 336 H458 V322 H470 M458 336 V418 H470" fill="none" stroke="#1d7d5f" stroke-width="3.2"/>
+<circle cx="458" cy="336" r="4" fill="#1d7d5f"/>
+<line x1="555" y1="445" x2="555" y2="475" stroke="#6a5fc6" stroke-width="3.2"/>
+<g font-family="DejaVu Sans, sans-serif" font-size="12" fill="#3a3a36">
+<line x1="60" y1="565" x2="90" y2="565" stroke="#1d7d5f" stroke-width="3.2"/><text x="98" y="569">magistrala I²C + zasilanie</text>
+<line x1="300" y1="565" x2="330" y2="565" stroke="#6a5fc6" stroke-width="1.6"/><text x="338" y="569">sygnał GPIO</text>
+<line x1="435" y1="565" x2="465" y2="565" stroke="#c8622f" stroke-width="1.6"/><text x="473" y="569">zasilanie z akumulatora</text>
+</g>
+</svg>
+<div class="figcap">Rysunek 1. Schemat połączeń. Gruba zielona linia to cztery żyły biegnące razem: 3V3, GND, SDA i SCL.</div>
+</div>
+
+<div class="fig">
+<svg viewBox="0 0 680 375" xmlns="http://www.w3.org/2000/svg">
+<g font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="bold" fill="#1b1b19" text-anchor="middle">
+<text x="182" y="56">Pokrywa</text><text x="497" y="56">Dół</text></g>
+<rect x="40" y="70" width="285" height="228" rx="12" fill="#faf9f5" stroke="#8a8880" stroke-width="1"/>
+<g fill="#eef0ec" stroke="#0f3b30" stroke-width="0.8">
+<rect x="61.8" y="196.7" width="36.4" height="36.4" rx="4"/><rect x="113.8" y="196.7" width="36.4" height="36.4" rx="4"/>
+<rect x="165.8" y="196.7" width="36.4" height="36.4" rx="4"/><rect x="217.8" y="196.7" width="36.4" height="36.4" rx="4"/>
+<rect x="269.8" y="196.7" width="36.4" height="36.4" rx="4"/>
+<rect x="61.8" y="248.7" width="36.4" height="36.4" rx="4"/><rect x="113.8" y="248.7" width="36.4" height="36.4" rx="4"/>
+<rect x="165.8" y="248.7" width="36.4" height="36.4" rx="4"/><rect x="217.8" y="248.7" width="36.4" height="36.4" rx="4"/>
+<rect x="269.8" y="248.7" width="36.4" height="36.4" rx="4"/></g>
+<g font-family="DejaVu Sans, sans-serif" font-size="12" fill="#1b1b19" text-anchor="middle">
+<text x="80" y="219">1</text><text x="132" y="219">2</text><text x="184" y="219">3</text><text x="236" y="219">4</text><text x="288" y="219">5</text>
+<text x="80" y="271">6</text><text x="132" y="271">7</text><text x="184" y="271">8</text><text x="236" y="271">9</text><text x="288" y="271">10</text></g>
+<rect x="105.8" y="101" width="117" height="49.4" rx="4" fill="#dcece5" stroke="#0f3b30" stroke-width="0.8"/>
+<text x="164" y="130" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">OLED</text>
+<circle cx="286" cy="136" r="9" fill="#dcece5" stroke="#0f3b30" stroke-width="0.8"/>
+<text x="286" y="167" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">KY-040</text>
+<rect x="43" y="94" width="28" height="21" rx="3" fill="#fbf0df" stroke="#c8622f" stroke-width="0.8"/>
+<text x="62" y="87" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">SS12C40</text>
+<circle cx="106" cy="241" r="6" fill="#fff" stroke="#8a8880" stroke-width="0.8"/>
+<circle cx="262" cy="241" r="6" fill="#fff" stroke="#8a8880" stroke-width="0.8"/>
+<rect x="355" y="70" width="285" height="228" rx="12" fill="#faf9f5" stroke="#8a8880" stroke-width="1"/>
+<rect x="407" y="75" width="169" height="104" rx="4" fill="none" stroke="#8a8880" stroke-width="0.8" stroke-dasharray="4 3"/>
+<rect x="420" y="85" width="130" height="88" rx="4" fill="#fbf0df" stroke="#c8622f" stroke-width="0.8"/>
+<text x="485" y="133" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">Akumulator</text>
+<rect x="360" y="140" width="45" height="55" rx="4" fill="#e9e8f6" stroke="#6a5fc6" stroke-width="0.8"/>
+<text x="382" y="171" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">XIAO</text>
+<rect x="430" y="215" width="94" height="68" rx="4" fill="#e9e8f6" stroke="#6a5fc6" stroke-width="0.8"/>
+<text x="477" y="253" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">PCF8574</text>
+<circle cx="421" cy="241" r="6" fill="#fff" stroke="#8a8880" stroke-width="0.8"/>
+<circle cx="577" cy="241" r="6" fill="#fff" stroke="#8a8880" stroke-width="0.8"/>
+<g font-family="DejaVu Sans, sans-serif" font-size="12" fill="#5a5a54">
+<text x="40" y="329">Pokrywa: 10 × MX w rastrze 20 mm, OLED w kołnierzu, enkoder, wyłącznik</text>
+<text x="40" y="351">Dół: akumulator w komorze, XIAO przy lewej ścianie, PCF8574 na dnie pod klawiszami</text></g>
+</svg>
+<div class="figcap">Rysunek 2. Rozmieszczenie w obudowie — współrzędne odczytane z Twoich plików STL. Białe kółka to słupki na śruby M3.</div>
+</div>
+
+<div class="page-break"></div>
+<h2>Etap 1 — Przygotowanie</h2>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 1</span><span class="step-t">Przygotuj stanowisko</span></div>
+<ul>
+<li>Znajdź stół, na którym nic Cię nie goni przez najbliższe kilka godzin. Najlepiej twardy, jasny blat — drobne części lubią znikać w dywanie.</li>
+<li>Połóż podkładkę niepalną: kawałek płytki ceramicznej, blacha do pieczenia albo choćby gruby karton. Kropla cyny spadająca z grota przepala obrus.</li>
+<li>Ustaw lutownicę na <b>320&nbsp;°C</b>, jeśli ma regulację. Podstawkę połóż po tej stronie, którą trzymasz lutownicę.</li>
+<li><b>Akumulator odłóż do innego pokoju albo do szuflady.</b> Wróci dopiero w kroku 16.</li>
+</ul>
+<div class="check"><b>Sprawdź:</b> na blacie masz wolne miejsce wielkości kartki A4. Jeśli nie masz, posprzątaj — będziesz operował dwiema połówkami obudowy połączonymi wiązką i potrzebujesz przestrzeni.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 2</span><span class="step-t">Sprawdź komplet i przymierz na sucho</span></div>
+<ul>
+<li>Rozłóż wszystkie części z listy i policz je. Brakujący przewód znajdziesz teraz w 30 sekund, a za trzy godziny — nigdy.</li>
+<li>Weź jeden przełącznik MX i wciśnij go palcem w dowolne wycięcie w pokrywie. Ma wejść z lekkim oporem. Jeśli w ogóle nie wchodzi, wydruk trzeba lekko przeszlifować pilnikiem igłowym po wewnętrznych krawędziach wycięcia.</li>
+<li>Włóż OLED od spodu w kołnierz, a enkoder wsuń trzpieniem w okrągły otwór. Sprawdź, czy siedzą — nic nie przykręcaj i nie klej.</li>
+<li>Wyjmij wszystko z powrotem. To była tylko próba.</li>
+</ul>
+<div class="warn"><b>Częsty błąd:</b> pominięcie tego kroku i odkrycie w kroku 14, że przełącznik nie wchodzi — a wtedy masz już do niego przylutowane przewody i szlifowanie jest koszmarem.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 3</span><span class="step-t">Wtop gwinty M3 w dno</span></div>
+<p>W dnie są dwa kwadratowe słupki z otworami 4,2&nbsp;mm. To nie są otwory na wkręty — to gniazda na mosiężne wtopki, które dadzą Ci prawdziwy gwint w plastiku.</p>
+<ul>
+<li>Postaw wtopkę na otworze, szerszym końcem do góry.</li>
+<li>Ustaw lutownicę na <b>250&nbsp;°C</b> (niżej niż do lutowania) i dotknij grotem środka wtopki, naciskając <b>bardzo delikatnie</b>, pionowo w dół. Wtopka zacznie sama tonąć w plastiku.</li>
+<li>Gdy jej górna krawędź zrówna się z powierzchnią słupka — zabierz lutownicę. Nie wciskaj głębiej.</li>
+<li>Poczekaj 30 sekund, aż plastik ostygnie. Dopiero wtedy dotykaj.</li>
+</ul>
+<div class="check"><b>Sprawdź:</b> wkręć na próbę śrubę M3. Powinna wchodzić gładko i prostopadle. Jeśli wtopka weszła krzywo, podgrzej ją ponownie i popraw, dociskając z boku.</div>
+<div class="warn"><b>Nie masz wtopek?</b> Nie zastąpisz ich wkrętem do plastiku — otwór 4,2&nbsp;mm jest na to o wiele za duży. Alternatywa to wklejenie nakrętki M3 kroplą kleju epoksydowego, ale wtopka jest zdecydowanie lepsza.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 4</span><span class="step-t">Wciśnij 10 przełączników MX w pokrywę</span></div>
+<p>Przełączniki wciskasz <b>od góry</b> pokrywy, tak żeby nóżki wystawały do środka obudowy.</p>
+<ul>
+<li><b>Ustaw wszystkie tak samo</b> — obie nóżki mają być bliżej górnej krawędzi pokrywy (tej z OLED-em). To nie ma znaczenia elektrycznego, ale dzięki temu wszystkie luty będą w jednej linii i wiązka wyjdzie równa.</li>
+<li>Wciskaj kciukami, równomiernie, prosto w dół. Przełącznik ma wejść na całą głębokość, aż jego obudowa dotknie płyty.</li>
+<li>Płyta w Twoim wydruku ma 2,4&nbsp;mm grubości, a zatrzaski MX są robione pod 1,5&nbsp;mm — <b>mogą nie kliknąć</b>. To normalne. Przełącznik trzyma się wtedy ciernie.</li>
+<li>Jeśli któryś się rusza, kapnij od spodu odrobinę kleju na gorąco w narożnik jego obudowy. Nie na nóżki i nie na środek.</li>
+</ul>
+<div class="check"><b>Sprawdź:</b> obróć pokrywę i potrząśnij lekko. Nic nie wypada, wszystkie nóżki sterczą w tę samą stronę.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 5</span><span class="step-t">Potnij i ocynuj przewody</span></div>
+<p>Kolory nie są ozdobą — za trzy godziny będą jedyną rzeczą, która pozwoli Ci rozpoznać, co jest czym. Trzymaj się ich sztywno.</p>
+<table>
+<tr><th>Do czego</th><th style="width:16%">Kolor</th><th style="width:12%">Sztuk</th><th style="width:18%">Długość</th></tr>
+<tr><td>Sygnały klawiszy 1–8 (do PCF8574)</td><td><span class="swatch" style="background:#f2f0e8"></span>biały / dowolny jasny</td><td>8</td><td>150 mm</td></tr>
+<tr><td>Sygnały klawiszy 9–10 (do XIAO)</td><td><span class="swatch" style="background:#8a72c4"></span>fioletowy</td><td>2</td><td>170 mm</td></tr>
+<tr><td>Łańcuch masy między klawiszami</td><td><span class="swatch" style="background:#26251f"></span>czarny</td><td>9</td><td>30 mm</td></tr>
+<tr><td>Masa klawiszy do dna</td><td><span class="swatch" style="background:#26251f"></span>czarny</td><td>1</td><td>150 mm</td></tr>
+<tr><td>OLED: 3V3, GND, SDA, SCL</td><td>czerw. / czar. / nieb. / żółty</td><td>4</td><td>170 mm</td></tr>
+<tr><td>KY-040: +, GND, CLK, DT, SW</td><td>czerw. / czar. / 3 × fiolet</td><td>5</td><td>170 mm</td></tr>
+<tr><td>Wyłącznik SS12C40</td><td><span class="swatch" style="background:#d4772f"></span>pomarańczowy 26 AWG</td><td>2</td><td>130 mm</td></tr>
+<tr><td>PCF8574 do XIAO (oba w dnie)</td><td>czerw./czar./nieb./żółty/ziel.</td><td>5</td><td>70 mm</td></tr>
+</table>
+<ul>
+<li>Ściągnij izolację na <b>3 mm</b> z obu końców. Nie więcej — długi goły odcinek to gotowe zwarcie.</li>
+<li><b>Ocynuj każdy koniec:</b> dotknij grotem żyłki, policz „raz, dwa", podaj odrobinę cyny. Żyłka ma zrobić się srebrna i sztywna, nie ma się rozłazić na włoski.</li>
+<li>Posortuj wiązki gumką recepturką albo klipsem, opisz je kartkami. Naprawdę warto.</li>
+</ul>
+<div class="warn"><b>Częsty błąd:</b> cynowanie zbyt długo. Silikon się cofa i odsłania kolejny centymetr żyłki. Trzy sekundy na koniec, nie więcej.</div>
+</div>
+
+<div class="page-break"></div>
+<h2>Etap 2 — Lutowanie modułów na stole</h2>
+<p class="lead">Wszystko poniżej robisz z modułami leżącymi luzem na blacie, przed włożeniem ich do obudowy. Po włożeniu nie będzie już do nich dostępu.</p>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 6</span><span class="step-t">Ustaw adres PCF8574 i przylutuj do niego przewody</span></div>
+<p>PCF8574 ma na magistrali swój numer — adres. Zależy on od trzech punktów opisanych <code>A0</code>, <code>A1</code>, <code>A2</code> (tam, gdzie były zworki). Skoro zworek już nie ma, punkty te „wiszą w powietrzu" i adres jest niepewny. Ustalmy go raz a dobrze.</p>
+<ul>
+<li>Odetnij trzy krótkie kawałki czarnego przewodu (po 15 mm), ocynuj i połącz nimi <b>A0, A1 oraz A2 z polem GND</b> na tym samym module. Adres modułu to teraz <b>0x20</b>.</li>
+<li>Przylutuj pięć przewodów o długości 70 mm: <span class="mono">VCC</span> (czerwony), <span class="mono">GND</span> (czarny), <span class="mono">SDA</span> (niebieski), <span class="mono">SCL</span> (żółty), <span class="mono">INT</span> (zielony).</li>
+<li>Przylutuj osiem białych przewodów po 150 mm do pól <span class="mono">P0</span> … <span class="mono">P7</span>. Podpisz je taśmą: 1, 2, 3 … 8.</li>
+</ul>
+<div class="check"><b>Sprawdź multimetrem:</b> brzęczyk między A0 a GND — ma piszczeć. Między VCC a GND — <b>nie może</b> piszczeć. Jeśli piszczy, masz zwarcie i musisz je znaleźć teraz, nie później.</div>
+<div class="warn"><b>Uwaga na wersję układu.</b> Jeśli na kostce jest napis <span class="mono">PCF8574<b>A</b></span>, adresy są inne (0x38–0x3F) i jeden z nich koliduje z wyświetlaczem. Zweryfikujesz to skanerem w kroku 14 — na razie po prostu zerknij na napis i zapamiętaj.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 7</span><span class="step-t">Przylutuj przewody do wyświetlacza OLED</span></div>
+<ul>
+<li>Wyświetlacz ma cztery pola, zwykle w kolejności <span class="mono">GND · VCC · SCL · SDA</span>. <b>Przeczytaj napisy na swoim egzemplarzu</b> — bywają inne kolejności i to jest najczęstsza przyczyna „nie działa".</li>
+<li>Przylutuj cztery przewody po 170 mm zgodnie z kolorami: GND czarny, VCC czerwony, SCL żółty, SDA niebieski.</li>
+<li>Lutuj szybko, po 2–3 sekundy na pole. Szkło wyświetlacza nie lubi długiego grzania.</li>
+<li>Kapnij kroplę kleju na gorąco na same przewody tuż obok lutów. To zabezpieczy je przed wyrwaniem pól przy szarpnięciu.</li>
+</ul>
+<div class="check"><b>Sprawdź:</b> pociągnij delikatnie za każdy przewód. Żaden się nie rusza, żadne pole nie odchodzi od płytki.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 8</span><span class="step-t">Przylutuj przewody do enkodera KY-040</span></div>
+<ul>
+<li>Pięć pól: <span class="mono">CLK · DT · SW · + · GND</span>. Przylutuj pięć przewodów po 170 mm.</li>
+<li>Kolory: <span class="mono">+</span> czerwony, <span class="mono">GND</span> czarny, a <span class="mono">CLK</span>, <span class="mono">DT</span>, <span class="mono">SW</span> fioletowe. Podpisz te trzy fioletowe taśmą, bo są nie do rozróżnienia.</li>
+<li><b>Opcjonalnie, ale polecam:</b> przylutuj dwa kondensatory 100 nF — jeden między <span class="mono">CLK</span> a <span class="mono">GND</span>, drugi między <span class="mono">DT</span> a <span class="mono">GND</span>, bezpośrednio na polach modułu. Kondensator nie ma biegunowości, więc nie da się go wlutować odwrotnie. Bez nich enkoder będzie czasem przeskakiwał o dwa kliknięcia.</li>
+</ul>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 9</span><span class="step-t">Przygotuj wyłącznik i przewody akumulatora</span></div>
+<p>Wyłącznik SS12C40 ma trzy nóżki. Środkowa to wspólna, a z dwóch skrajnych używasz <b>tylko jednej</b> — dowolnej.</p>
+<ul>
+<li>Przylutuj pomarańczowy przewód 130 mm do <b>środkowej</b> nóżki i drugi taki sam do <b>jednej skrajnej</b>.</li>
+<li>Trzecią, nieużywaną nóżkę <b>odizoluj</b>: nasuń na nią kawałek koszulki termokurczliwej i zgrzej. Albo odetnij ją obcinaczkami przy samej obudowie wyłącznika.</li>
+<li>Teraz akumulator — <b>wciąż go nie podłączasz</b>, przygotowujesz tylko stronę urządzenia. Najbezpieczniej: weź gniazdo JST XH 2,54 z przewodami i to <b>jego</b> przewody wlutujesz do XIAO. Akumulator będzie się wtedy wpinał i wypinał, a Ty nigdy nie dotkniesz lutownicą jego ogniwa.</li>
+<li>Jeśli gniazda nie masz i musisz odciąć wtyk z akumulatora: <b>odetnij czerwony przewód, natychmiast zaklej jego koniec taśmą, dopiero potem tnij czarny.</b> Nigdy oba naraz jednym cięciem obcinaczek — to zwarcie.</li>
+</ul>
+<div class="danger"><b>To jest ten moment, w którym ludzie robią sobie krzywdę.</b> Jeśli choć przez chwilę zawahasz się przy przewodach akumulatora — kup gniazdo JST i nie tnij niczego. Kosztuje kilka złotych.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 10</span><span class="step-t">Przylutuj wszystko do płytki XIAO</span></div>
+<p>To najgęstsza część roboty. XIAO jest mały, a pola leżą blisko siebie — pracuj powoli i po jednym przewodzie.</p>
+<table>
+<tr><th style="width:20%">Pole na XIAO</th><th>Co do niego idzie</th></tr>
+<tr><td class="mono">3V3</td><td>Czerwony do PCF8574 (70 mm). Do tego samego pola dojdą później zasilania OLED i enkodera — patrz uwaga pod tabelą.</td></tr>
+<tr><td class="mono">GND</td><td>Czarny do PCF8574 (70 mm), analogicznie jak wyżej.</td></tr>
+<tr><td class="mono">D4</td><td>Niebieski (SDA) — do PCF8574.</td></tr>
+<tr><td class="mono">D5</td><td>Żółty (SCL) — do PCF8574.</td></tr>
+<tr><td class="mono">D3</td><td>Zielony — do pola INT na PCF8574.</td></tr>
+<tr><td class="mono">D0 / D1 / D2</td><td>Trzy fioletowe od enkodera: CLK do D0, DT do D1, SW do D2.</td></tr>
+<tr><td class="mono">D6 / D7</td><td>Dwa fioletowe 170 mm — pojadą do klawiszy 9 i 10.</td></tr>
+<tr><td class="mono">BAT+</td><td>Pole na <b>spodzie</b> płytki. Idzie do niego pomarańczowy od skrajnej nóżki wyłącznika.</td></tr>
+<tr><td class="mono">BAT−</td><td>Sąsiednie pole na spodzie. Idzie do niego czarny przewód akumulatora (lub gniazda JST).</td></tr>
+</table>
+<p><b>Jak podłączyć trzy rzeczy do jednego pola 3V3?</b> Nie upychaj trzech przewodów w jeden otwór. Zamiast tego zrób <b>skrętkę lutowaną</b>: weź czerwone przewody od OLED-a, od enkodera i jeden dodatkowy kawałek 60 mm, skręć ich gołe końce razem, zalej cyną, nasuń koszulkę termokurczliwą i zgrzej. Ten jeden dodatkowy przewód lutujesz do <span class="mono">3V3</span> na XIAO. Dokładnie to samo zrób dla masy — z tym, że do skrętki masy dochodzi jeszcze czarny przewód od łańcucha klawiszy.</p>
+<p><b>SDA i SCL do dwóch układów</b> zrób inaczej, prościej: przewód z <span class="mono">D4</span> idzie do pola SDA na wyświetlaczu, a z tego samego pola wyświetlacza wychodzi drugi przewód do SDA na PCF8574. Dwa przewody w jednym polu OLED-a to jeszcze da się zlutować. Tak samo z SCL.</p>
+<div class="warn"><b>Pola BAT+ i BAT− są maleńkie i łatwo je oderwać.</b> Po przylutowaniu koniecznie kapnij na oba kroplę kleju na gorąco, obejmując też kawałek przewodu. Oderwane pole BAT+ oznacza koniec płytki.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 11</span><span class="step-t">Zlutuj wspólną masę wszystkich klawiszy</span></div>
+<p>Każdy przełącznik MX ma dwie nóżki i nie ma biegunowości — obojętne, którą uznasz za masę. Ważne, żeby we wszystkich dziesięciu wybrać <b>tę samą stronę</b>. Umówmy się: lewa nóżka to masa.</p>
+<ul>
+<li>Weź czarny kawałek 30 mm, przylutuj jeden koniec do lewej nóżki klawisza&nbsp;1, drugi do lewej nóżki klawisza&nbsp;2.</li>
+<li>Kolejnym kawałkiem połącz klawisz 2 z 3, potem 3 z 4 i tak dalej, aż do klawisza 10. To jest „łańcuch" — dziewięć odcinków na dziesięć klawiszy.</li>
+<li>Do lewej nóżki klawisza, który leży najbliżej środka pokrywy, przylutuj dodatkowo <b>czarny przewód 150 mm</b>. To on pojedzie do dna, do skrętki masy z kroku 10.</li>
+<li>Lutuj po 2–3 sekundy na nóżkę. Dłuższe grzanie topi plastik przełącznika i styk zaczyna „zacinać".</li>
+</ul>
+<div class="check"><b>Sprawdź brzęczykiem:</b> przyłóż jedną sondę do lewej nóżki klawisza 1, drugą do lewej nóżki klawisza 10. Ma piszczeć. Jeśli nie — gdzieś w łańcuchu jest przerwa; przejdź go po kolei, para po parze.</div>
+</div>
+
+<div class="fig">
+<svg viewBox="0 0 620 235" xmlns="http://www.w3.org/2000/svg">
+<g fill="#eef0ec" stroke="#0f3b30" stroke-width="1">
+<rect x="40" y="30" width="70" height="70" rx="6"/><rect x="155" y="30" width="70" height="70" rx="6"/>
+<rect x="270" y="30" width="70" height="70" rx="6"/><rect x="385" y="30" width="70" height="70" rx="6"/>
+<rect x="500" y="30" width="70" height="70" rx="6"/></g>
+<g font-family="DejaVu Sans, sans-serif" font-size="13" fill="#1b1b19" text-anchor="middle">
+<text x="75" y="70">1</text><text x="190" y="70">2</text><text x="305" y="70">3</text><text x="420" y="70">4</text><text x="535" y="70">5</text></g>
+<g fill="#26251f">
+<circle cx="60" cy="100" r="5"/><circle cx="175" cy="100" r="5"/><circle cx="290" cy="100" r="5"/><circle cx="405" cy="100" r="5"/><circle cx="520" cy="100" r="5"/></g>
+<g fill="#8a72c4">
+<circle cx="90" cy="100" r="5"/><circle cx="205" cy="100" r="5"/><circle cx="320" cy="100" r="5"/><circle cx="435" cy="100" r="5"/><circle cx="550" cy="100" r="5"/></g>
+<path d="M60 100 V140 H520 M175 100 V140 M290 100 V140 M405 100 V140 M520 100 V140" fill="none" stroke="#26251f" stroke-width="2.4"/>
+<path d="M290 140 V175 H250" fill="none" stroke="#26251f" stroke-width="2.4"/>
+<text x="242" y="179" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#1b1b19" text-anchor="end">do masy w dnie (150 mm)</text>
+<g fill="none" stroke="#8a72c4" stroke-width="2">
+<path d="M90 100 V205"/><path d="M205 100 V205"/><path d="M320 100 V205"/><path d="M435 100 V205"/><path d="M550 100 V205"/></g>
+<g font-family="DejaVu Sans Mono, monospace" font-size="11" fill="#3a3a36" text-anchor="middle">
+<text x="90" y="222">P0</text><text x="205" y="222">P1</text><text x="320" y="222">P2</text><text x="435" y="222">P3</text><text x="550" y="222">P4</text></g>
+</svg>
+<div class="figcap">Rysunek 3. Łańcuch masy (czarny) i osobne przewody sygnałowe (fioletowe). Pokazano 5 z 10 klawiszy — pozostałe robisz identycznie, kontynuując łańcuch.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 12</span><span class="step-t">Przylutuj przewody sygnałowe klawiszy</span></div>
+<ul>
+<li>Do <b>prawej</b> nóżki klawiszy 1–8 przylutuj białe przewody idące od pól P0–P7 modułu PCF8574. Klawisz 1 do P0, klawisz 2 do P1 i tak dalej — trzymaj się numeracji z Rysunku 2.</li>
+<li>Do prawej nóżki klawisza 9 przylutuj fioletowy przewód z pola <span class="mono">D6</span>, a klawisza 10 — z pola <span class="mono">D7</span>.</li>
+<li>Prowadź przewody możliwie płasko po wewnętrznej stronie pokrywy, w stronę środka. Nie napinaj ich.</li>
+</ul>
+<div class="check"><b>Sprawdź brzęczykiem każdy klawisz po kolei:</b> jedna sonda na jego przewód sygnałowy, druga na dowolną nóżkę masy. Przy wciśniętym klawiszu ma piszczeć, przy puszczonym cisza. Dziesięć klawiszy, dziesięć testów — zajmie to dwie minuty i oszczędzi godzinę.</div>
+<div class="warn"><b>Piszczy cały czas, nawet bez wciskania?</b> Masz zwarcie — najczęściej kropla cyny łącząca obie nóżki tego samego przełącznika. Rozgrzej i zdejmij nadmiar.</div>
+</div>
+<div class="page-break"></div>
+<h2>Etap 3 — Test, zanim cokolwiek zamkniesz</h2>
+<p class="lead">Obie połówki obudowy leżą teraz obok siebie na blacie, połączone wiązką. Tak właśnie mają zostać przez najbliższe cztery kroki. To jedyny moment, w którym masz dostęp do każdego lutu — wykorzystaj go.</p>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 13</span><span class="step-t">Sprawdź multimetrem, zanim podłączysz cokolwiek do prądu</span></div>
+<p>Ten krok trwa dwie minuty i chroni Cię przed spaleniem XIAO. Ustaw multimetr na brzęczyk (symbol fali dźwiękowej albo diody).</p>
+<ul>
+<li><b>Test najważniejszy:</b> jedna sonda na pole <span class="mono">3V3</span> XIAO, druga na <span class="mono">GND</span>. <b>Nie może piszczeć.</b> Jeśli piszczy — masz zwarcie zasilania i nie wolno Ci podłączyć USB, dopóki go nie znajdziesz.</li>
+<li>Powtórz to samo na polach VCC/GND wyświetlacza, enkodera i PCF8574. Wszędzie cisza.</li>
+<li>Sprawdź ciągłość zasilania: sonda na <span class="mono">3V3</span> XIAO i na <span class="mono">VCC</span> wyświetlacza — <b>ma</b> piszczeć. To samo dla enkodera i PCF8574. To potwierdza, że skrętka lutowana z kroku 10 faktycznie łączy.</li>
+<li>Sprawdź masę tak samo: <span class="mono">GND</span> XIAO ma piszczeć z masą każdego modułu i z nóżką dowolnego klawisza.</li>
+<li>Sprawdź, czy <span class="mono">SDA</span> i <span class="mono">SCL</span> nie są ze sobą zwarte — cisza.</li>
+</ul>
+<div class="warn"><b>Znalazłeś zwarcie i nie wiesz gdzie?</b> Odlutuj po kolei zasilanie kolejnych modułów i po każdym powtarzaj test. Ten moduł, po którego odłączeniu brzęczyk milknie, jest winowajcą.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 14</span><span class="step-t">Pierwsze podłączenie USB i skanowanie magistrali</span></div>
+<ul>
+<li>Podłącz XIAO kablem USB-C do komputera. Na płytce powinna zapalić się dioda.</li>
+<li>Zainstaluj Arduino IDE. W <span class="mono">Plik → Ustawienia</span> dodaj adres płytek Seeed nRF52:<br><span class="mono" style="font-size:8pt">https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json</span><br>Następnie w menedżerze płytek zainstaluj pakiet Seeed nRF52 i wybierz płytkę <b>Seeed XIAO nRF52840</b>.</li>
+<li>Wgraj poniższy program (skaner magistrali) i otwórz Monitor portu szeregowego, prędkość 115200.</li>
+</ul>
+<pre>#include &lt;Wire.h&gt;
+void setup() {
+  Serial.begin(115200);
+  while (!Serial) delay(10);
+  Wire.begin();
+  Serial.println("Szukam ukladow na I2C...");
+  for (byte a = 1; a &lt; 127; a++) {
+    Wire.beginTransmission(a);
+    if (Wire.endTransmission() == 0) {
+      Serial.print("Znalazlem uklad pod adresem 0x");
+      Serial.println(a, HEX);
+    }
+  }
+  Serial.println("Koniec.");
+}
+void loop() {}</pre>
+<div class="check"><b>Sprawdź:</b> w monitorze mają pojawić się <b>dokładnie dwa</b> adresy: <b>0x3C</b> (wyświetlacz) i <b>0x20</b> (PCF8574). Jeśli tak jest — najtrudniejsze masz za sobą.</div>
+<div class="warn"><b>Nic się nie wgrywa?</b> Wciśnij szybko dwa razy przycisk reset na XIAO. Płytka wejdzie w tryb bootloadera i pojawi się w systemie jako pendrive. Wtedy spróbuj ponownie. Jeśli komputer w ogóle nie widzi płytki — masz kabel „tylko do ładowania". Zmień kabel.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 15</span><span class="step-t">Wgraj program testowy i sprawdź każdy klawisz</span></div>
+<ul>
+<li>W menedżerze bibliotek Arduino zainstaluj: <b>PCF8574</b> (autor Rob Tillaart), <b>Adafruit SSD1306</b> oraz <b>Adafruit GFX Library</b>.</li>
+<li>Wgraj program z następnej strony.</li>
+<li>Naciskaj klawisze <b>po kolei, od 1 do 10</b>, i patrz na wyświetlacz oraz na monitor portu. Każdy numer musi się pojawić i zniknąć po puszczeniu.</li>
+<li>Pokręć enkoderem w obie strony — licznik ma rosnąć i maleć. Wciśnij trzpień enkodera — ma pojawić się <span class="mono">ENC</span>.</li>
+<li><b>Zapisz sobie, co nie działa</b>, i napraw wszystko teraz. Po zamknięciu obudowy dostęp do lutów wymaga rozkręcenia.</li>
+</ul>
+<div class="check"><b>Sprawdź:</b> dziesięć klawiszy, obrót w dwie strony, przycisk enkodera, tekst na wyświetlaczu. Komplet.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 16</span><span class="step-t">Dopiero teraz podłącz akumulator</span></div>
+<ul>
+<li><b>Odłącz kabel USB.</b></li>
+<li>Ustaw wyłącznik SS12C40 w pozycję, którą uznasz za OFF — zapamiętaj którą.</li>
+<li>Przynieś akumulator. Sprawdź wzrokowo, czy nie jest wybrzuszony i czy izolacja przewodów jest cała.</li>
+<li>Wepnij wtyk JST (albo — jeśli lutowałeś bezpośrednio — zlutuj czerwony do czerwonego i czarny do czarnego, <b>po jednym przewodzie, każdy od razu w koszulce</b>).</li>
+<li>Przełącz wyłącznik w drugą pozycję. Wyświetlacz powinien się zapalić.</li>
+</ul>
+<div class="check"><b>Sprawdź:</b> w pozycji ON urządzenie działa bez USB, w pozycji OFF gaśnie całkowicie. Jeśli działa w obu — wyłącznik jest podłączony do złej pary nóżek; użyj środkowej i jednej skrajnej.</div>
+<div class="warn"><b>Zapamiętaj:</b> wyłącznik przerywa plus akumulatora, więc <b>w pozycji OFF urządzenie się nie ładuje</b>. Do ładowania musi być włączone.</div>
+</div>
+
+<div class="page-break"></div>
+<h2>Etap 4 — Montaż i zamknięcie</h2>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 17</span><span class="step-t">Wklej elektronikę w dno</span></div>
+<p>Kolejność ma znaczenie — od największego do najmniejszego, zaczynając od tego, co leży najgłębiej.</p>
+<ul>
+<li><b>PCF8574</b> kładziesz płasko na dnie, mniej więcej pod środkiem pola klawiszy. Nad nim jest około 6 mm wolnej przestrzeni do nóżek przełączników, więc moduł spokojnie się mieści — ale musi leżeć, nie stać. Przyklej taśmą dwustronną.</li>
+<li><b>XIAO</b> wchodzi w wolny pas przy lewej ściance, poniżej wyłącznika. Ustaw go tak, żeby gniazdo USB-C celowało w ściankę — przyda się, jeśli kiedyś wytniesz w niej otwór. Taśma dwustronna albo dwie kropki kleju w narożnikach.</li>
+<li><b>Akumulator</b> wkładasz w prostokątną komorę w górnej części dna. Wchodzi z zapasem. Przyklej dwustronną taśmą, ale <b>nie zaklejaj go na sztywno klejem na gorąco</b> — ogniwo to część eksploatacyjna, kiedyś będziesz je wymieniał.</li>
+<li>Przewody akumulatora ułóż wzdłuż ścianki, nie na wierzchu ogniwa.</li>
+</ul>
+<div class="warn"><b>Uwaga na słupki śrub.</b> Dwa kwadratowe słupki w środkowej części dna muszą zostać wolne. Jeśli przejdzie przez nie przewód, śruba go przetnie przy skręcaniu.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 18</span><span class="step-t">Uformuj wiązkę i zrób pętlę serwisową</span></div>
+<p>Przez szczelinę między pokrywą a dnem przechodzi <b>19 żył</b>. Jeśli zostawisz je luzem, będą się plątać pod śrubami, a przy każdym otwarciu obudowy będziesz wyrywał luty. Poświęć na ten krok kwadrans.</p>
+<ul>
+<li>Zbierz wszystkie przewody idące z pokrywy do dna w jeden płaski pęczek. Ułóż je obok siebie, nie jeden na drugim.</li>
+<li>Sklej pęczek <b>wąskim paskiem taśmy co ok. 15 mm</b>. Powstanie płaska taśma szerokości mniej więcej centymetra. Płaska taśma zgina się w jednej płaszczyźnie i sama układa się przy zamykaniu — okrągły warkocz nie.</li>
+<li><b>Zostaw 80–100 mm zapasu</b> ponad to, co jest potrzebne przy zamkniętej obudowie. Tyle wystarczy, żeby położyć pokrywę obok dna i dostać się do lutów.</li>
+<li>Nadmiar złóż w płaskie <b>Z</b> — dwa zagięcia, jak harmonijka — i wciśnij w wolną przestrzeń nad polem klawiszy. Nie zwijaj w kłębek.</li>
+<li><b>Zakotwicz oba końce:</b> kropla kleju na gorąco tam, gdzie taśma wychodzi z pokrywy, i druga tam, gdzie wchodzi w dno. Od teraz każde szarpnięcie idzie w klej, a nie w lut.</li>
+<li><b>Dwa przewody akumulatora prowadź osobno</b> od reszty, przy samej ściance, w dodatkowej koszulce termokurczliwej. Nie wkładaj ich do wspólnej taśmy.</li>
+</ul>
+<div class="fig">
+<svg viewBox="0 0 680 285" xmlns="http://www.w3.org/2000/svg">
+<g font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="bold" fill="#1b1b19">
+<text x="40" y="26">Zamknięta</text><text x="350" y="26">Otwarta — pokrywa odłożona obok</text></g>
+<rect x="40" y="150" width="260" height="62" rx="5" fill="#faf9f5" stroke="#8a8880" stroke-width="1.2"/>
+<rect x="40" y="78" width="260" height="62" rx="5" fill="#eef0ec" stroke="#0f3b30" stroke-width="1.2"/>
+<path d="M170 140 V168 H248 V184 H92 V198 H150" fill="none" stroke="#6a5fc6" stroke-width="2.6"/>
+<circle cx="170" cy="143" r="4.5" fill="#c8622f"/><circle cx="150" cy="198" r="4.5" fill="#c8622f"/>
+<text x="170" y="70" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#5a5a54" text-anchor="middle">pokrywa</text>
+<text x="170" y="232" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#5a5a54" text-anchor="middle">dno</text>
+<text x="170" y="256" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#1b1b19" text-anchor="middle">zapas złożony w płaskie Z</text>
+<rect x="350" y="150" width="260" height="62" rx="5" fill="#faf9f5" stroke="#8a8880" stroke-width="1.2"/>
+<rect x="380" y="20" width="260" height="62" rx="5" fill="#eef0ec" stroke="#0f3b30" stroke-width="1.2"/>
+<path d="M470 82 C438 112 396 126 442 152 C470 168 448 182 468 198" fill="none" stroke="#6a5fc6" stroke-width="2.6"/>
+<circle cx="470" cy="84" r="4.5" fill="#c8622f"/><circle cx="468" cy="198" r="4.5" fill="#c8622f"/>
+<text x="510" y="232" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#5a5a54" text-anchor="middle">dno</text>
+<text x="480" y="256" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#1b1b19" text-anchor="middle">ten sam zapas rozprostowany</text>
+<circle cx="60" cy="276" r="4.5" fill="#c8622f"/>
+<text x="74" y="280" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#3a3a36">kropla kleju na gorąco — kotwica odciążająca luty</text>
+</svg>
+<div class="figcap">Rysunek 4. Zapas wiązki złożony w Z pozwala odłożyć pokrywę obok dna bez naprężania żadnego lutu.</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 19</span><span class="step-t">Test przed skręceniem — ostatnia szansa</span></div>
+<ul>
+<li>Złóż obudowę <b>bez śrub</b>, dociskając ją palcami. Poczuj, czy coś stawia opór — jeśli tak, gdzieś jest przewód, który nie chce się zmieścić.</li>
+<li>Włącz wyłącznik i przetestuj wszystkie dziesięć klawiszy oraz enkoder <b>przy zamkniętej obudowie</b>. Zdarza się, że dociśnięty przewód rozwiera lut, który przy otwartej obudowie działał.</li>
+<li>Rozłóż jeszcze raz i sprawdź wzrokowo, czy żaden przewód nie leży na słupku śruby ani na krawędzi.</li>
+</ul>
+<div class="warn"><b>Coś przestało działać po dociśnięciu?</b> To prawie zawsze zimny lut — połączenie, które trzyma się mechanicznie, ale nie elektrycznie. Znajdź go i przelutuj z odrobiną świeżej cyny.</div>
+</div>
+
+<div class="step">
+<div class="step-h"><span class="step-n">Krok 20</span><span class="step-t">Skręć obudowę i nałóż keycapy</span></div>
+<ul>
+<li>Włóż dwie śruby M3 × 10 przez otwory w pokrywie i wkręć je we wtopki. <b>Dokręcaj palcami, nie na siłę</b> — wtopkę w plastiku da się wyrwać przez przekręcenie.</li>
+<li>Nasuń keycapy na trzpienie przełączników. Wciskaj pionowo, do oporu.</li>
+<li>Nałóż gałkę na enkoder.</li>
+<li>Naładuj urządzenie: włącz wyłącznik i podłącz USB-C. Ładowanie przy 1500 mAh potrwa długo — patrz uwagi na końcu.</li>
+</ul>
+<div class="check"><b>Gotowe.</b> Zostało Ci już tylko oprogramowanie.</div>
+</div>
+
+<div class="page-break"></div>
+<h2>Tabela połączeń — do powieszenia nad blatem</h2>
+<table>
+<tr><th style="width:26%">Skąd</th><th style="width:36%">Dokąd</th><th>Uwagi</th></tr>
+<tr><td colspan="3" style="background:#0f3b30;color:#fff;font-weight:bold;font-size:9pt">ZASILANIE</td></tr>
+<tr><td>Akumulator +</td><td>SS12C40, nóżka środkowa</td><td>Przez gniazdo JST, jeśli je masz</td></tr>
+<tr><td>SS12C40, nóżka skrajna</td><td>XIAO — pole BAT+ (spód płytki)</td><td>Trzecią nóżkę zaizoluj lub odetnij</td></tr>
+<tr><td>Akumulator −</td><td>XIAO — pole BAT− (spód płytki)</td><td>Zabezpiecz klejem na gorąco</td></tr>
+<tr><td>XIAO 3V3</td><td>VCC: OLED, PCF8574, KY-040</td><td>Przez skrętkę lutowaną w koszulce</td></tr>
+<tr><td>XIAO GND</td><td>GND: OLED, PCF8574, KY-040, łańcuch klawiszy</td><td>Druga skrętka lutowana</td></tr>
+<tr><td colspan="3" style="background:#0f3b30;color:#fff;font-weight:bold;font-size:9pt">MAGISTRALA I²C</td></tr>
+<tr><td>XIAO D4</td><td>OLED SDA, dalej PCF8574 SDA</td><td>Niebieski, łańcuchem przez pole OLED-a</td></tr>
+<tr><td>XIAO D5</td><td>OLED SCL, dalej PCF8574 SCL</td><td>Żółty, tak samo</td></tr>
+<tr><td>XIAO D3</td><td>PCF8574 INT</td><td>Zielony; w programie ustaw INPUT_PULLUP</td></tr>
+<tr><td>PCF8574 A0, A1, A2</td><td>GND na tym samym module</td><td>Ustawia adres 0x20</td></tr>
+<tr><td colspan="3" style="background:#0f3b30;color:#fff;font-weight:bold;font-size:9pt">ENKODER KY-040</td></tr>
+<tr><td>XIAO D0</td><td>KY-040 CLK</td><td rowspan="3">Trzy fioletowe; podpisz je taśmą, bo są identyczne</td></tr>
+<tr><td>XIAO D1</td><td>KY-040 DT</td></tr>
+<tr><td>XIAO D2</td><td>KY-040 SW</td></tr>
+<tr><td colspan="3" style="background:#0f3b30;color:#fff;font-weight:bold;font-size:9pt">KLAWISZE</td></tr>
+<tr><td>Klawisze 1–8, prawa nóżka</td><td>PCF8574 P0 … P7</td><td>Kolejno: klawisz 1 → P0, klawisz 8 → P7</td></tr>
+<tr><td>Klawisz 9, prawa nóżka</td><td>XIAO D6</td><td rowspan="2">Bezpośrednio, z pominięciem ekspandera</td></tr>
+<tr><td>Klawisz 10, prawa nóżka</td><td>XIAO D7</td></tr>
+<tr><td>Wszystkie klawisze, lewa nóżka</td><td>Łańcuch masy → skrętka GND</td><td>Dziewięć odcinków po 30 mm + jeden 150 mm</td></tr>
+</table>
+<p style="font-size:9.5pt;color:#5a5a54"><b>Piny wolne:</b> D8, D9, D10 — możesz podpiąć pod nie brzęczyk, diodę statusu albo dodatkowy przełącznik.</p>
+
+<h2 style="margin-top:22px">Program testowy</h2>
+<pre>#include &lt;Wire.h&gt;
+#include &lt;PCF8574.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+
+PCF8574 pcf(0x20);
+Adafruit_SSD1306 oled(128, 32, &amp;Wire, -1);
+
+int  poprzedniA = HIGH;
+long licznik = 0;
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+  pinMode(D0, INPUT_PULLUP);   // enkoder CLK
+  pinMode(D1, INPUT_PULLUP);   // enkoder DT
+  pinMode(D2, INPUT_PULLUP);   // enkoder - przycisk
+  pinMode(D3, INPUT_PULLUP);   // INT z PCF8574
+  pinMode(D6, INPUT_PULLUP);   // klawisz 9
+  pinMode(D7, INPUT_PULLUP);   // klawisz 10
+  pcf.begin(0xFF);             // wszystkie osiem pinow jako wejscia
+  oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  oled.setTextSize(1);
+  oled.setTextColor(SSD1306_WHITE);
+}
+
+void loop() {
+  uint8_t stan = pcf.read8();          // bit = 0 oznacza wcisniety klawisz
+  String lista = "";
+  for (int i = 0; i &lt; 8; i++)
+    if (!(stan &amp; (1 &lt;&lt; i))) lista += String(i + 1) + " ";
+  if (digitalRead(D6) == LOW) lista += "9 ";
+  if (digitalRead(D7) == LOW) lista += "10 ";
+  if (digitalRead(D2) == LOW) lista += "ENC ";
+
+  int a = digitalRead(D0);             // obsluga obrotu enkodera
+  if (a != poprzedniA &amp;&amp; a == LOW)
+    licznik += (digitalRead(D1) != a) ? 1 : -1;
+  poprzedniA = a;
+
+  oled.clearDisplay();
+  oled.setCursor(0, 0);
+  oled.println("Klawisze:");
+  oled.println(lista);
+  oled.println("Enkoder: " + String(licznik));
+  oled.display();
+  Serial.println(lista + "| enkoder " + String(licznik));
+  delay(50);
+}</pre>
+<p style="font-size:9.5pt;color:#5a5a54">Jeśli enkoder liczy w odwrotną stronę, niż kręcisz — zamień w programie <span class="mono">D0</span> z <span class="mono">D1</span>. Nie musisz nic przelutowywać.</p>
+
+<div class="page-break"></div>
+<h2>Kiedy coś nie działa</h2>
+<table>
+<tr><th style="width:34%">Objaw</th><th>Co sprawdzić, w tej kolejności</th></tr>
+<tr><td>Komputer w ogóle nie widzi XIAO</td><td>Zmień kabel na taki z transmisją danych. Potem wciśnij dwa razy szybko reset — płytka pojawi się jako pendrive.</td></tr>
+<tr><td>Skaner I²C nie znajduje niczego</td><td>Zamienione SDA ze SCL to przyczyna numer jeden. Potem: brak zasilania modułów (zmierz 3,3 V między VCC a GND wyświetlacza), na końcu zimne luty.</td></tr>
+<tr><td>Skaner widzi tylko 0x3C</td><td>PCF8574 nie ma zasilania albo ma inny adres. Sprawdź ciągłość VCC i GND do modułu, potem czy A0, A1, A2 faktycznie dotykają masy.</td></tr>
+<tr><td>Skaner pokazuje 0x27 zamiast 0x20</td><td>Przewody adresowe nie łączą. Przelutuj je.</td></tr>
+<tr><td>Skaner pokazuje adres z zakresu 0x38–0x3F</td><td>Masz układ PCF8574<b>A</b>. Wpisz znaleziony adres do programu w miejsce 0x20. Gdyby wypadł dokładnie 0x3C — koliduje z wyświetlaczem; przełóż wtedy jeden z przewodów adresowych z GND na VCC.</td></tr>
+<tr><td>Wyświetlacz świeci, ale nic nie pokazuje</td><td>Sprawdź rozmiar w programie: moduł 0,91 cala to <span class="mono">128, 32</span>, nie 128, 64.</td></tr>
+<tr><td>Jeden klawisz jest „wciśnięty" cały czas</td><td>Zwarcie między jego nóżkami albo kropla cyny mostkująca sąsiednie pola na PCF8574.</td></tr>
+<tr><td>Jeden klawisz nie reaguje wcale</td><td>Przerwa. Przyłóż brzęczyk między jego pole na PCF8574 a nóżkę przełącznika, przy wciśniętym klawiszu.</td></tr>
+<tr><td>Enkoder przeskakuje o dwa</td><td>Dolutuj kondensatory 100 nF z kroku 8. To najczęstsza dolegliwość KY-040.</td></tr>
+<tr><td>Nie ładuje się</td><td>Wyłącznik jest w pozycji OFF. Przerywa on plus akumulatora, więc do ładowania urządzenie musi być włączone.</td></tr>
+<tr><td>Działa na USB, nie działa na akumulatorze</td><td>Zimny lut na polu BAT+ lub BAT− albo źle podłączony wyłącznik. Zmierz napięcie na polu BAT+ przy włączonym wyłączniku — ma być ok. 3,7–4,2 V.</td></tr>
+</table>
+
+<h2 style="margin-top:22px">Trzy rzeczy, o których warto wiedzieć</h2>
+<h3>W obudowie nie ma otworu na USB-C</h3>
+<p>Sprawdziłem przekroje wszystkich czterech ścianek w obu plikach STL — są pełne. Oznacza to, że ładowanie i wgrywanie programu wymaga rozkręcenia obudowy. Jeśli Ci to przeszkadza, masz dwie drogi: dodać w modelu wycięcie ok. 10 × 5 mm w lewej ściance na wysokości gniazda XIAO i wydrukować dno ponownie, albo wyciąć ten otwór w gotowym wydruku ostrym nożem i pilnikiem igłowym. Druga opcja jest szybsza, ale wygląda gorzej.</p>
+<h3>Ładowanie potrwa bardzo długo</h3>
+<p>XIAO ma fabrycznie ustawiony prąd ładowania na około 50 mA. Przy ogniwie 1500 mAh oznacza to ponad trzydzieści godzin do pełna. Na spodzie płytki jest pole lutownicze, które podnosi ten prąd do 100 mA — sprawdź aktualną dokumentację Seeed Studio dla swojej rewizji płytki, bo oznaczenia się zmieniały. Nawet wtedy będzie to kilkanaście godzin, więc po prostu zostawiaj urządzenie na noc.</p>
+<h3>Co dalej z oprogramowaniem</h3>
+<p>Program testowy z tej instrukcji tylko pokazuje, co jest wciskane. Żeby makropad faktycznie wysyłał klawisze do komputera przez Bluetooth, potrzebujesz biblioteki BLE HID — w środowisku Arduino jest to <b>Adafruit Bluefruit nRF52</b>, dostępna razem z pakietem płytek Seeed. Alternatywą, znacznie potężniejszą, jest gotowy firmware <b>ZMK</b>, stworzony dokładnie do bezprzewodowych klawiatur na układach nRF52840 — obsługuje warstwy, makra i oszczędzanie energii bez pisania kodu. Wymaga za to nauczenia się jego plików konfiguracyjnych.</p>
+<p style="margin-top:14px;font-size:9pt;color:#8a8880;border-top:0.5px solid #d8d6cc;padding-top:8px">Wymiary i położenia elementów w tej instrukcji zostały odczytane bezpośrednio z plików <span class="mono">Dol.stl</span> i <span class="mono">Lid_final.stl</span>. Obudowa ma 109,8 × 87,75 mm, prześwit wewnętrzny 12 mm, raster klawiszy 20 mm, wycięcia 14 × 14 mm.</p>
+
+</body>
+</html>

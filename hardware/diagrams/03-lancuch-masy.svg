@@ -1,0 +1,19 @@
+<svg viewBox="0 0 620 235" xmlns="http://www.w3.org/2000/svg">
+<g fill="#eef0ec" stroke="#0f3b30" stroke-width="1">
+<rect x="40" y="30" width="70" height="70" rx="6"/><rect x="155" y="30" width="70" height="70" rx="6"/>
+<rect x="270" y="30" width="70" height="70" rx="6"/><rect x="385" y="30" width="70" height="70" rx="6"/>
+<rect x="500" y="30" width="70" height="70" rx="6"/></g>
+<g font-family="DejaVu Sans, sans-serif" font-size="13" fill="#1b1b19" text-anchor="middle">
+<text x="75" y="70">1</text><text x="190" y="70">2</text><text x="305" y="70">3</text><text x="420" y="70">4</text><text x="535" y="70">5</text></g>
+<g fill="#26251f">
+<circle cx="60" cy="100" r="5"/><circle cx="175" cy="100" r="5"/><circle cx="290" cy="100" r="5"/><circle cx="405" cy="100" r="5"/><circle cx="520" cy="100" r="5"/></g>
+<g fill="#8a72c4">
+<circle cx="90" cy="100" r="5"/><circle cx="205" cy="100" r="5"/><circle cx="320" cy="100" r="5"/><circle cx="435" cy="100" r="5"/><circle cx="550" cy="100" r="5"/></g>
+<path d="M60 100 V140 H520 M175 100 V140 M290 100 V140 M405 100 V140 M520 100 V140" fill="none" stroke="#26251f" stroke-width="2.4"/>
+<path d="M290 140 V175 H250" fill="none" stroke="#26251f" stroke-width="2.4"/>
+<text x="242" y="179" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#1b1b19" text-anchor="end">do masy w dnie (150 mm)</text>
+<g fill="none" stroke="#8a72c4" stroke-width="2">
+<path d="M90 100 V205"/><path d="M205 100 V205"/><path d="M320 100 V205"/><path d="M435 100 V205"/><path d="M550 100 V205"/></g>
+<g font-family="DejaVu Sans Mono, monospace" font-size="11" fill="#3a3a36" text-anchor="middle">
+<text x="90" y="222">P0</text><text x="205" y="222">P1</text><text x="320" y="222">P2</text><text x="435" y="222">P3</text><text x="550" y="222">P4</text></g>
+</svg>

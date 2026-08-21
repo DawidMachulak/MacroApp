@@ -1,0 +1,47 @@
+<svg viewBox="0 0 680 600" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#0f3b30" stroke-width="1">
+<rect x="40" y="175" width="165" height="70" rx="8" fill="#eef0ec"/>
+<rect x="40" y="307" width="165" height="56" rx="8" fill="#fbf0df"/>
+<rect x="40" y="400" width="165" height="64" rx="8" fill="#fbf0df"/>
+<rect x="248" y="130" width="180" height="300" rx="8" fill="#e9e8f6"/>
+<rect x="470" y="165" width="170" height="85" rx="8" fill="#eef0ec"/>
+<rect x="470" y="285" width="170" height="64" rx="8" fill="#eef0ec"/>
+<rect x="470" y="375" width="170" height="70" rx="8" fill="#e9e8f6"/>
+<rect x="470" y="475" width="170" height="64" rx="8" fill="#eef0ec"/>
+</g>
+<g font-family="DejaVu Sans, sans-serif" fill="#1b1b19" text-anchor="middle">
+<text x="122" y="202" font-size="14" font-weight="bold">Klawisze 9–10</text><text x="122" y="224" font-size="12" fill="#5a5a54">sygnał + masa</text>
+<text x="122" y="330" font-size="14" font-weight="bold">SS12C40</text><text x="122" y="350" font-size="12" fill="#5a5a54">w torze BAT+</text>
+<text x="122" y="427" font-size="14" font-weight="bold">Li-Po 3,7 V</text><text x="122" y="448" font-size="12" fill="#5a5a54">1500 mAh, PCM</text>
+<text x="338" y="159" font-size="14" font-weight="bold">XIAO nRF52840</text><text x="338" y="179" font-size="12" fill="#5a5a54">MCU + ładowarka</text>
+<text x="555" y="196" font-size="14" font-weight="bold">KY-040</text><text x="555" y="219" font-size="12" fill="#5a5a54">CLK, DT, SW, +, GND</text>
+<text x="555" y="312" font-size="14" font-weight="bold">OLED SSD1306</text><text x="555" y="333" font-size="12" fill="#5a5a54">I²C, adres 0x3C</text>
+<text x="555" y="404" font-size="14" font-weight="bold">PCF8574</text><text x="555" y="426" font-size="12" fill="#5a5a54">8 wejść + INT</text>
+<text x="555" y="502" font-size="14" font-weight="bold">Klawisze 1–8</text><text x="555" y="523" font-size="12" fill="#5a5a54">do P0–P7</text>
+</g>
+<g font-family="DejaVu Sans Mono, monospace" font-size="11" fill="#3a3a36">
+<text x="258" y="204">D6</text><text x="258" y="226">D7</text><text x="258" y="339">BAT+</text><text x="258" y="369">BAT−</text>
+<text x="418" y="204" text-anchor="end">D0</text><text x="418" y="226" text-anchor="end">D1</text><text x="418" y="248" text-anchor="end">D2</text>
+<text x="418" y="304" text-anchor="end">3V3</text><text x="418" y="322" text-anchor="end">GND</text><text x="418" y="340" text-anchor="end">D4 SDA</text>
+<text x="418" y="358" text-anchor="end">D5 SCL</text><text x="418" y="394" text-anchor="end">D3</text>
+</g>
+<g stroke-width="1.6" fill="none">
+<line x1="205" y1="200" x2="246" y2="200" stroke="#6a5fc6"/>
+<line x1="205" y1="222" x2="246" y2="222" stroke="#6a5fc6"/>
+<line x1="205" y1="335" x2="246" y2="335" stroke="#c8622f"/>
+<line x1="122" y1="400" x2="122" y2="363" stroke="#c8622f"/>
+<path d="M205 432 H228 V365 H246" stroke="#c8622f"/>
+<line x1="430" y1="200" x2="470" y2="200" stroke="#6a5fc6"/>
+<line x1="430" y1="222" x2="470" y2="222" stroke="#6a5fc6"/>
+<line x1="430" y1="244" x2="470" y2="244" stroke="#6a5fc6"/>
+<path d="M430 390 H442 V435 H470" stroke="#6a5fc6" stroke-dasharray="4 3"/>
+</g>
+<path d="M430 336 H458 V322 H470 M458 336 V418 H470" fill="none" stroke="#1d7d5f" stroke-width="3.2"/>
+<circle cx="458" cy="336" r="4" fill="#1d7d5f"/>
+<line x1="555" y1="445" x2="555" y2="475" stroke="#6a5fc6" stroke-width="3.2"/>
+<g font-family="DejaVu Sans, sans-serif" font-size="12" fill="#3a3a36">
+<line x1="60" y1="565" x2="90" y2="565" stroke="#1d7d5f" stroke-width="3.2"/><text x="98" y="569">magistrala I²C + zasilanie</text>
+<line x1="300" y1="565" x2="330" y2="565" stroke="#6a5fc6" stroke-width="1.6"/><text x="338" y="569">sygnał GPIO</text>
+<line x1="435" y1="565" x2="465" y2="565" stroke="#c8622f" stroke-width="1.6"/><text x="473" y="569">zasilanie z akumulatora</text>
+</g>
+</svg>

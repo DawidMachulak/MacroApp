@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Makropad BLE — Konfigurator</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .oled-screen {
+    background: #04120f;
+    box-shadow: inset 0 0 12px rgba(0,0,0,.8);
+  }
+  .oled-canvas { image-rendering: pixelated; }
+  .key-cap {
+    transition: transform .06s ease, box-shadow .06s ease, background-color .1s ease;
+  }
+  .key-cap:active, .key-cap.is-pressed {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0,0,0,.5) !important;
+  }
+  .key-cap.is-selected {
+    outline: 2px solid #22d3ee;
+    outline-offset: 2px;
+  }
+  .enc-zone.is-selected {
+    outline: 2px solid #22d3ee;
+    outline-offset: 2px;
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+<header class="border-b border-slate-800 bg-slate-900/60 sticky top-0 z-10 backdrop-blur">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <div>
+      <h1 class="text-lg font-semibold tracking-tight">Makropad BLE — Konfigurator</h1>
+      <p class="text-xs text-slate-400">Krok 1 (architektura) + Krok 2 (Web Serial API)</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="fw-badge" class="text-xs text-slate-500"></span>
+      <span id="conn-badge" class="text-xs px-2 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+        ⏺ Niepodłączono
+      </span>
+      <button id="btn-connect"
+        class="text-sm px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-800">
+        Połącz z urządzeniem
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+
+  <!-- Warstwy -->
+  <section>
+    <div class="flex items-center gap-2 flex-wrap" id="layer-tabs"></div>
+  </section>
+
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+    <!-- Lewa kolumna: OLED + układ klawiszy -->
+    <section class="lg:col-span-3 space-y-5">
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+        <h2 class="text-sm font-medium text-slate-400 mb-3">Symulator ekranu OLED · 128×32</h2>
+        <div class="oled-screen rounded-lg p-4 flex justify-center">
+          <canvas id="oled" class="oled-canvas" width="512" height="128" style="width:min(100%,512px); height:auto;"></canvas>
+        </div>
+        <div class="mt-3">
+          <label class="text-xs text-slate-400 block mb-1.5">Tekst statusu (druga linia, warstwa „<span id="oled-sub-layer-name"></span>”)</label>
+          <input id="oled-sub" type="text" maxlength="40"
+            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-sm font-mono"
+            placeholder="Gotowy" />
+          <p class="text-xs text-slate-500 mt-1">Domyślnie „Gotowy” — symulator przycina tekst dokładnie tak, jak zmieści się na 128×32 (pomiar pikselowy, nie licznik znaków).</p>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-sm font-medium text-slate-400">Układ fizyczny · 10 klawiszy + enkoder</h2>
+          <span class="text-xs text-slate-500">raster 20&nbsp;mm</span>
+        </div>
+
+        <div class="flex flex-col items-center gap-6">
+          <div id="key-grid" class="grid grid-cols-5 gap-3"></div>
+
+          <div class="flex items-center gap-1 select-none">
+            <button data-enc="l" class="enc-zone px-3 py-2 rounded-l-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sm">◀ Lewo</button>
+            <button data-enc="b" class="enc-zone w-16 h-16 rounded-full bg-slate-700 hover:bg-slate-600 border-2 border-slate-600 text-xs font-medium">Klik</button>
+            <button data-enc="r" class="enc-zone px-3 py-2 rounded-r-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sm">Prawo ▶</button>
+          </div>
+          <p class="text-xs text-slate-500 -mt-3">Enkoder KY-040</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prawa kolumna: edytor makra -->
+    <section class="lg:col-span-2 space-y-5">
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-medium text-slate-400">Połączenie z urządzeniem</h2>
+          <span class="text-xs text-slate-500">Krok 2 · Web Serial</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mb-3 text-xs">
+          <button id="btn-get-config" disabled
+            class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-800">
+            Wczytaj z urządzenia
+          </button>
+          <button id="btn-send-layer" disabled
+            class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-800">
+            Wyślij bieżącą warstwę
+          </button>
+          <button id="btn-send-all" disabled
+            class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-800">
+            Wyślij cały config
+          </button>
+          <button id="btn-save-device" disabled
+            class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-800">
+            Zapisz w pamięci flash
+          </button>
+          <button id="btn-set-active" disabled
+            class="col-span-2 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-800">
+            Ustaw bieżącą warstwę jako aktywną na urządzeniu
+          </button>
+        </div>
+        <div id="serial-log" class="text-xs font-mono bg-slate-950 border border-slate-800 rounded-lg p-3 overflow-auto max-h-48 text-slate-400 space-y-0.5"></div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+        <div class="flex items-center justify-between mb-1">
+          <h2 class="text-sm font-medium text-slate-400">Edycja przypisania</h2>
+          <button id="btn-clear" class="text-xs text-rose-400 hover:text-rose-300">Wyczyść</button>
+        </div>
+        <p id="selection-label" class="text-base font-semibold mb-4">Klawisz 1</p>
+
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs text-slate-400 block mb-1.5">Tryb aktywacji</label>
+            <div id="mode-group" class="grid grid-cols-3 gap-2 text-xs"></div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs text-slate-400">Sekwencja akcji</label>
+              <button id="btn-add-step" class="text-xs text-cyan-400 hover:text-cyan-300">+ Dodaj krok</button>
+            </div>
+            <div id="steps-list" class="space-y-2"></div>
+          </div>
+
+          <div>
+            <label class="text-xs text-slate-400 block mb-1.5">
+              Losowe opóźnienie (anty-cheat / humanizacja)
+            </label>
+            <div class="flex items-center gap-2">
+              <input id="delay-min" type="number" min="0" max="5000" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-sm" />
+              <span class="text-slate-500 text-xs">do</span>
+              <input id="delay-max" type="number" min="0" max="5000" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-sm" />
+              <span class="text-slate-500 text-xs whitespace-nowrap">ms</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1" id="delay-hint"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-medium text-slate-400">Podgląd JSON (krótkie klucze — do urządzenia)</h2>
+          <button id="btn-copy" class="text-xs text-cyan-400 hover:text-cyan-300">Kopiuj</button>
+        </div>
+        <pre id="json-preview" class="text-xs bg-slate-950 border border-slate-800 rounded-lg p-3 overflow-auto max-h-72 text-slate-300"></pre>
+      </div>
+
+      <div class="flex gap-2">
+        <button id="btn-export" class="flex-1 text-sm px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700">
+          Eksportuj JSON
+        </button>
+        <label class="flex-1 text-sm px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center cursor-pointer">
+          Importuj JSON
+          <input id="btn-import" type="file" accept="application/json" class="hidden" />
+        </label>
+      </div>
+    </section>
+  </div>
+
+  <footer class="text-xs text-slate-600 pb-8">
+    Krok 1 (architektura + mockup) i Krok 2 (Web Serial API) gotowe — zgodnie z
+    <code>docs/06-architektura-i-json.md</code>. Panel „Połączenie z urządzeniem” działa wg
+    protokołu z §4, ale wymaga firmware, które go implementuje po drugiej stronie — to Krok 3.
+  </footer>
+</main>
+
+<script src="protocol.js"></script>
+<script>
+// ---------------------------------------------------------------------
+// Słowniki / tłumaczenia krótki-klucz -> czytelna nazwa (jak w architekturze)
+// ---------------------------------------------------------------------
+const TRYBY = [
+  { m: 0, label: "Naciśnij i puść" },
+  { m: 1, label: "Przytrzymaj" },
+  { m: 2, label: "Przełącz (toggle)" },
+];
+
+const TYPY_AKCJI = [
+  { t: 0, label: "Klawisz / kombinacja" },
+  { t: 1, label: "Wpisz tekst" },
+  { t: 2, label: "Zmiana warstwy" },
+  { t: 3, label: "Multimedia" },
+];
+
+const MEDIA_OPCJE = ["VOL_UP", "VOL_DOWN", "MUTE", "PLAY_PAUSE", "NEXT_TRACK", "PREV_TRACK"];
+
+// Znane nazwy klawiszy — zgodne z docs/06-architektura-i-json.md §3.4.
+// Używane tylko do miękkiej walidacji (podświetlenie), nie blokują wpisywania.
+const MODYFIKATORY = ["LCTRL", "RCTRL", "LSHIFT", "RSHIFT", "LALT", "RALT", "LGUI", "RGUI"];
+const KLAWISZE_NAZWANE = [
+  "ESC", "TAB", "ENTER", "SPACE", "BACKSPACE", "DEL",
+  "UP", "DOWN", "LEFT", "RIGHT", "HOME", "END", "PGUP", "PGDN",
+  "MINUS", "EQUAL", "LBRACKET", "RBRACKET", "SEMICOLON", "QUOTE",
+  "COMMA", "PERIOD", "SLASH", "BACKSLASH", "GRAVE",
+];
+function znanyToken(tok) {
+  if (MODYFIKATORY.includes(tok) || KLAWISZE_NAZWANE.includes(tok)) return true;
+  if (/^[A-Z0-9]$/.test(tok)) return true;           // pojedyncza litera/cyfra
+  if (/^F([1-9]|1[0-9]|2[0-4])$/.test(tok)) return true; // F1-F24
+  return false;
+}
+// Zwraca listę nieznanych tokenów w kombinacji typu "LCTRL+SHIFT+ESC" (pusta = OK).
+function nieznaneTokeny(c) {
+  if (!c) return [];
+  return c.split("+").map(t => t.trim()).filter(t => t && !znanyToken(t));
+}
+
+// ---------------------------------------------------------------------
+// Stan aplikacji (w pamięci — bez localStorage, zgodnie z mockupem)
+// ---------------------------------------------------------------------
+function pustePrzypisanie() {
+  return { m: 0, a: [{ t: 0, c: "" }], d: { mn: 0, mx: 0 } };
+}
+
+function domyslnyStan() {
+  return {
+    v: 1,
+    active: 0,
+    ly: [
+      {
+        n: "FPS",
+        s: "Gotowy",
+        k: [
+          { m: 0, a: [{ t: 0, c: "W" }], d: { mn: 0, mx: 0 } },
+          { m: 0, a: [{ t: 0, c: "A" }], d: { mn: 0, mx: 0 } },
+          { m: 0, a: [{ t: 0, c: "S" }], d: { mn: 0, mx: 0 } },
+          { m: 0, a: [{ t: 0, c: "D" }], d: { mn: 0, mx: 0 } },
+          { m: 0, a: [{ t: 0, c: "R" }], d: { mn: 20, mx: 60 } },
+          { m: 2, a: [{ t: 0, c: "LCTRL" }], d: { mn: 0, mx: 0 } },
+          { m: 1, a: [{ t: 0, c: "SPACE" }], d: { mn: 50, mx: 150 } },
+          null,
+          null,
+          null,
+        ],
+        enc: {
+          l: { m: 0, a: [{ t: 3, c: "VOL_DOWN" }], d: { mn: 0, mx: 0 } },
+          r: { m: 0, a: [{ t: 3, c: "VOL_UP" }], d: { mn: 0, mx: 0 } },
+          b: { m: 0, a: [{ t: 2, c: "next" }], d: { mn: 0, mx: 0 } },
+        },
+      },
+      {
+        n: "IDE",
+        s: "Gotowy",
+        k: [
+          { m: 0, a: [{ t: 0, c: "LCTRL+C" }], d: { mn: 0, mx: 0 } },
+          { m: 0, a: [{ t: 0, c: "LCTRL+V" }], d: { mn: 0, mx: 0 } },
+          { m: 0, a: [{ t: 0, c: "LCTRL+S" }], d: { mn: 0, mx: 0 } },
+          { m: 0, a: [{ t: 0, c: "LCTRL+Z" }], d: { mn: 0, mx: 0 } },
+          { m: 0, a: [{ t: 1, c: "console.log()" }], d: { mn: 0, mx: 0 } },
+          null, null, null, null, null,
+        ],
+        enc: {
+          l: { m: 0, a: [{ t: 0, c: "LCTRL+MINUS" }], d: { mn: 0, mx: 0 } },
+          r: { m: 0, a: [{ t: 0, c: "LCTRL+EQUAL" }], d: { mn: 0, mx: 0 } },
+          b: { m: 0, a: [{ t: 2, c: "prev" }], d: { mn: 0, mx: 0 } },
+        },
+      },
+    ],
+  };
+}
+
+let state = domyslnyStan();
+let currentLayer = 0;
+let selected = { type: "key", idx: 0 };
+let oledFlashTimeout = null;
+
+// ---------------------------------------------------------------------
+// Pomocnicze
+// ---------------------------------------------------------------------
+function layer() { return state.ly[currentLayer]; }
+
+function getSelectedAssignment() {
+  if (selected.type === "key") return layer().k[selected.idx];
+  return layer().enc[selected.which];
+}
+
+function setSelectedAssignment(val) {
+  if (selected.type === "key") layer().k[selected.idx] = val;
+  else layer().enc[selected.which] = val;
+}
+
+function selectionLabel() {
+  if (selected.type === "key") return `Klawisz ${selected.idx + 1}`;
+  const nazwy = { l: "Enkoder — obrót w lewo", r: "Enkoder — obrót w prawo", b: "Enkoder — klik" };
+  return nazwy[selected.which];
+}
+
+function skrocSekwencje(a) {
+  if (!a || a.length === 0) return "—";
+  return a.map(step => step.c || "…").join(" → ");
+}
+
+// Zwraca przypisanie dla aktualnie zaznaczonego klawisza/akcji enkodera,
+// tworząc puste (domyślne) przypisanie, jeśli klawisz jest jeszcze
+// nieprzypisany — dzięki temu każda interakcja w edytorze (zmiana trybu,
+// dodanie kroku, wpisanie opóźnienia) na pustym klawiszu od razu go zakłada,
+// zamiast wymagać wcześniejszego kliknięcia „Przypisz”.
+function ensureAssignment() {
+  let a = getSelectedAssignment();
+  if (!a) {
+    a = pustePrzypisanie();
+    setSelectedAssignment(a);
+  }
+  return a;
+}
+
+// ---------------------------------------------------------------------
+// Render: zakładki warstw
+// ---------------------------------------------------------------------
+function renderLayerTabs() {
+  const el = document.getElementById("layer-tabs");
+  el.innerHTML = "";
+  state.ly.forEach((ly, i) => {
+    const wrap = document.createElement("div");
+    wrap.className = "flex items-center";
+
+    const tab = document.createElement("button");
+    tab.className = "px-4 py-2 rounded-lg text-sm border transition " +
+      (i === currentLayer
+        ? "bg-cyan-500/10 border-cyan-500 text-cyan-300"
+        : "bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700");
+    tab.textContent = ly.n || `Warstwa ${i + 1}`;
+    tab.title = "Kliknij, aby przełączyć · dwuklik, aby zmienić nazwę";
+    tab.addEventListener("click", () => {
+      currentLayer = i;
+      renderAll();
+    });
+    tab.addEventListener("dblclick", () => {
+      const nowa = prompt("Nazwa warstwy (widoczna na OLED, max 10 znaków):", ly.n);
+      if (nowa != null) {
+        ly.n = nowa.slice(0, 10);
+        renderAll();
+      }
+    });
+    wrap.appendChild(tab);
+    el.appendChild(wrap);
+  });
+
+  const addBtn = document.createElement("button");
+  addBtn.className = "px-3 py-2 rounded-lg text-sm border border-dashed border-slate-700 text-slate-500 hover:text-slate-300 hover:border-slate-500";
+  addBtn.textContent = "+ Warstwa";
+  addBtn.addEventListener("click", () => {
+    state.ly.push({
+      n: `W${state.ly.length + 1}`,
+      s: "Gotowy",
+      k: Array(10).fill(null),
+      enc: { l: pustePrzypisanie(), r: pustePrzypisanie(), b: pustePrzypisanie() },
+    });
+    currentLayer = state.ly.length - 1;
+    renderAll();
+  });
+  el.appendChild(addBtn);
+
+  if (state.ly.length > 1) {
+    const delBtn = document.createElement("button");
+    delBtn.className = "px-3 py-2 rounded-lg text-sm text-rose-500 hover:text-rose-400";
+    delBtn.textContent = "Usuń bieżącą";
+    delBtn.addEventListener("click", () => {
+      state.ly.splice(currentLayer, 1);
+      currentLayer = Math.max(0, currentLayer - 1);
+      renderAll();
+    });
+    el.appendChild(delBtn);
+  }
+}
+
+// ---------------------------------------------------------------------
+// Render: siatka klawiszy
+// ---------------------------------------------------------------------
+function renderKeyGrid() {
+  const el = document.getElementById("key-grid");
+  el.innerHTML = "";
+  layer().k.forEach((assignment, i) => {
+    const btn = document.createElement("button");
+    const zajety = !!assignment;
+    btn.className = "key-cap w-16 h-16 rounded-xl border text-xs flex flex-col items-center justify-center gap-0.5 " +
+      (zajety
+        ? "bg-slate-800 border-slate-600 text-slate-200"
+        : "bg-slate-900 border-slate-800 text-slate-600") +
+      (selected.type === "key" && selected.idx === i ? " is-selected" : "");
+    btn.innerHTML = `<span class="font-semibold">${i + 1}</span>` +
+      `<span class="truncate w-14 text-center text-[10px] text-slate-400">${zajety ? skrocSekwencje(assignment.a) : "brak"}</span>`;
+    btn.addEventListener("click", () => {
+      selected = { type: "key", idx: i };
+      renderAll();
+    });
+    btn.addEventListener("mousedown", () => flashOled(i, assignment));
+    el.appendChild(btn);
+  });
+}
+
+// ---------------------------------------------------------------------
+// Render: strefy enkodera
+// ---------------------------------------------------------------------
+function renderEncZones() {
+  document.querySelectorAll(".enc-zone").forEach(z => {
+    const which = z.dataset.enc;
+    z.classList.toggle("is-selected", selected.type === "enc" && selected.which === which);
+    z.onclick = () => { selected = { type: "enc", which }; renderAll(); };
+    z.onmousedown = () => flashOled(null, layer().enc[which], which);
+  });
+}
+
+// ---------------------------------------------------------------------
+// Render: panel edycji
+// ---------------------------------------------------------------------
+function renderEditor() {
+  document.getElementById("selection-label").textContent =
+    selectionLabel() + `  ·  warstwa „${layer().n}”`;
+
+  const a = getSelectedAssignment();
+  const puste = !a;
+
+  // tryby
+  const modeGroup = document.getElementById("mode-group");
+  modeGroup.innerHTML = "";
+  TRYBY.forEach(tr => {
+    const b = document.createElement("button");
+    b.className = "px-2 py-2 rounded-lg border " +
+      (!puste && a.m === tr.m
+        ? "bg-cyan-500/10 border-cyan-500 text-cyan-300"
+        : "bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200");
+    b.textContent = tr.label;
+    b.addEventListener("click", () => { ensureAssignment().m = tr.m; renderAll(); });
+    modeGroup.appendChild(b);
+  });
+
+  // kroki sekwencji
+  const stepsList = document.getElementById("steps-list");
+  stepsList.innerHTML = "";
+  if (puste) {
+    const info = document.createElement("p");
+    info.className = "text-xs text-slate-500 italic mb-2";
+    info.textContent = "Ten klawisz nie ma jeszcze przypisania.";
+    stepsList.appendChild(info);
+  } else {
+    a.a.forEach((step, si) => stepsList.appendChild(renderStepRow(a, step, si)));
+  }
+
+  // delay
+  const dMin = document.getElementById("delay-min");
+  const dMax = document.getElementById("delay-max");
+  dMin.value = puste ? 0 : a.d.mn;
+  dMax.value = puste ? 0 : a.d.mx;
+  dMin.oninput = () => { ensureAssignment().d.mn = clampInt(dMin.value, 0, 5000); renderJson(); };
+  dMax.oninput = () => { ensureAssignment().d.mx = clampInt(dMax.value, 0, 5000); renderJson(); };
+
+  const modeLabel = puste ? "" : TRYBY.find(t => t.m === a.m).label.toLowerCase();
+  document.getElementById("delay-hint").textContent = puste ? "" :
+    (a.m === 0
+      ? `Losowy czas między Key Down a Key Up (tryb: ${modeLabel}).`
+      : `Losowy odstęp między kolejnymi powtórzeniami (tryb: ${modeLabel}).`);
+
+  document.getElementById("btn-clear").textContent = puste ? "Przypisz" : "Wyczyść";
+}
+
+function renderStepRow(assignment, step, index) {
+  const row = document.createElement("div");
+  row.className = "flex items-start gap-2 bg-slate-800/60 border border-slate-700 rounded-lg p-2";
+
+  const left = document.createElement("div");
+  left.className = "flex-1 space-y-1.5";
+
+  const typeSel = document.createElement("select");
+  typeSel.className = "w-full bg-slate-900 border border-slate-700 rounded-md px-2 py-1 text-xs";
+  TYPY_AKCJI.forEach(ty => {
+    const opt = document.createElement("option");
+    opt.value = ty.t;
+    opt.textContent = ty.label;
+    if (ty.t === step.t) opt.selected = true;
+    typeSel.appendChild(opt);
+  });
+  typeSel.addEventListener("change", () => {
+    step.t = Number(typeSel.value);
+    step.c = step.t === 2 ? "next" : step.t === 3 ? MEDIA_OPCJE[0] : "";
+    renderAll();
+  });
+  left.appendChild(typeSel);
+
+  let contentInput;
+  let uwaga = null; // komunikat walidacyjny pod polem — tylko dla typu 0 (klawisz)
+  if (step.t === 2) {
+    contentInput = document.createElement("select");
+    contentInput.className = "w-full bg-slate-900 border border-slate-700 rounded-md px-2 py-1 text-xs";
+    const opcje = ["next", "prev", ...state.ly.map((_, i) => String(i))];
+    opcje.forEach(v => {
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = v === "next" ? "Następna warstwa" : v === "prev" ? "Poprzednia warstwa" :
+        `Warstwa: ${state.ly[Number(v)] ? state.ly[Number(v)].n : v}`;
+      if (v === step.c) opt.selected = true;
+      contentInput.appendChild(opt);
+    });
+    contentInput.addEventListener("change", () => { step.c = contentInput.value; syncAfterEdit(); });
+  } else if (step.t === 3) {
+    contentInput = document.createElement("select");
+    contentInput.className = "w-full bg-slate-900 border border-slate-700 rounded-md px-2 py-1 text-xs";
+    MEDIA_OPCJE.forEach(v => {
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = v;
+      if (v === step.c) opt.selected = true;
+      contentInput.appendChild(opt);
+    });
+    contentInput.addEventListener("change", () => { step.c = contentInput.value; syncAfterEdit(); });
+  } else {
+    contentInput = document.createElement("input");
+    contentInput.type = "text";
+    contentInput.maxLength = 64; // realny bufor Serial/RAM jest ograniczony, patrz docs/06 §5
+    contentInput.className = "w-full bg-slate-900 border border-slate-700 rounded-md px-2 py-1 text-xs font-mono";
+    contentInput.placeholder = step.t === 0 ? "np. LCTRL+SHIFT+ESC" : "tekst do wpisania";
+    contentInput.value = step.c;
+
+    if (step.t === 0) {
+      uwaga = document.createElement("p");
+      uwaga.className = "text-[10px] text-amber-400 hidden";
+    }
+
+    const odswiezWalidacje = () => {
+      if (step.t !== 0 || !uwaga) return;
+      const zle = nieznaneTokeny(contentInput.value);
+      if (zle.length && contentInput.value) {
+        contentInput.classList.add("border-amber-500");
+        uwaga.textContent = `Nieznana nazwa klawisza: ${zle.join(", ")} — lista w docs/06 §3.4`;
+        uwaga.classList.remove("hidden");
+      } else {
+        contentInput.classList.remove("border-amber-500");
+        uwaga.classList.add("hidden");
+      }
+    };
+
+    contentInput.addEventListener("input", () => {
+      step.c = step.t === 0 ? contentInput.value.toUpperCase() : contentInput.value;
+      odswiezWalidacje();
+      syncAfterEdit();
+    });
+    odswiezWalidacje();
+  }
+  left.appendChild(contentInput);
+  if (uwaga) left.appendChild(uwaga);
+  row.appendChild(left);
+
+  if (assignment.a.length > 1) {
+    const del = document.createElement("button");
+    del.className = "text-rose-400 hover:text-rose-300 text-xs px-1";
+    del.textContent = "✕";
+    del.title = "Usuń krok";
+    del.addEventListener("click", () => { assignment.a.splice(index, 1); renderAll(); });
+    row.appendChild(del);
+  }
+
+  return row;
+}
+
+// Lekka aktualizacja po edycji treści kroku: odświeża tylko podgląd JSON i,
+// jeśli zaznaczony jest klawisz, etykietę TEGO JEDNEGO przycisku w siatce —
+// bez wyburzania i odtwarzania całej siatki 10 klawiszy przy każdym
+// wciśniętym znaku (poprzednio robił to pełny renderKeyGrid()+renderEncZones()).
+function syncAfterEdit() {
+  renderJson();
+  if (selected.type === "key") updateKeyGridButton(selected.idx);
+}
+
+function updateKeyGridButton(idx) {
+  const btn = document.querySelectorAll("#key-grid .key-cap")[idx];
+  if (!btn) return;
+  const assignment = layer().k[idx];
+  const zajety = !!assignment;
+  btn.className = "key-cap w-16 h-16 rounded-xl border text-xs flex flex-col items-center justify-center gap-0.5 " +
+    (zajety
+      ? "bg-slate-800 border-slate-600 text-slate-200"
+      : "bg-slate-900 border-slate-800 text-slate-600") +
+    (selected.type === "key" && selected.idx === idx ? " is-selected" : "");
+  btn.innerHTML = `<span class="font-semibold">${idx + 1}</span>` +
+    `<span class="truncate w-14 text-center text-[10px] text-slate-400">${zajety ? skrocSekwencje(assignment.a) : "brak"}</span>`;
+}
+
+function clampInt(v, min, max) {
+  v = parseInt(v, 10);
+  if (isNaN(v)) v = 0;
+  return Math.max(min, Math.min(max, v));
+}
+
+// ---------------------------------------------------------------------
+// Render: podgląd JSON
+// ---------------------------------------------------------------------
+function renderJson() {
+  document.getElementById("json-preview").textContent = JSON.stringify(state, null, 2);
+}
+
+// ---------------------------------------------------------------------
+// Render: symulator OLED (canvas 128x32, wyświetlany 4x)
+// ---------------------------------------------------------------------
+const oledCanvas = document.getElementById("oled");
+const ctx = oledCanvas.getContext("2d");
+const SCALE = 4;
+
+function drawOled(line1, line2) {
+  ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = "#04120f";
+  ctx.fillRect(0, 0, oledCanvas.width, oledCanvas.height);
+  ctx.fillStyle = "#5eead4";
+  ctx.font = `${8 * SCALE}px monospace`;
+  ctx.textBaseline = "top";
+  ctx.fillText(truncOled(line1), 2 * SCALE, 2 * SCALE);
+  ctx.fillText(truncOled(line2), 2 * SCALE, 17 * SCALE);
+  // linia oddzielająca, jak w prawdziwym firmware (nagłówek warstwy)
+  ctx.strokeStyle = "rgba(94,234,212,.35)";
+  ctx.beginPath();
+  ctx.moveTo(0, 13 * SCALE);
+  ctx.lineTo(oledCanvas.width, 13 * SCALE);
+  ctx.stroke();
+}
+
+function truncOled(s) {
+  // Przycina do faktycznej szerokości canvasu, mierząc piksele (ctx.measureText)
+  // zamiast zgadywać po liczbie znaków — dokładniejszy podgląd tego, co się
+  // zmieści na prawdziwym OLED 128×32 (różne znaki mają różną szerokość).
+  s = s || "";
+  const maxWidth = oledCanvas.width - 4 * SCALE; // margines taki jak x-offset tekstu (2*SCALE z każdej strony)
+  if (ctx.measureText(s).width <= maxWidth) return s;
+  let lo = 0, hi = s.length;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (ctx.measureText(s.slice(0, mid)).width <= maxWidth) lo = mid;
+    else hi = mid - 1;
+  }
+  return s.slice(0, lo);
+}
+
+function idleOled() {
+  drawOled(layer().n, layer().s || "Gotowy");
+}
+
+function renderOledSub() {
+  document.getElementById("oled-sub-layer-name").textContent = layer().n;
+  const inp = document.getElementById("oled-sub");
+  if (document.activeElement !== inp) inp.value = layer().s || "";
+  inp.oninput = () => {
+    layer().s = inp.value.slice(0, 40);
+    renderJson();
+    idleOled();
+  };
+}
+
+function flashOled(keyIdx, assignment, encWhich) {
+  if (oledFlashTimeout) clearTimeout(oledFlashTimeout);
+  const label = encWhich
+    ? { l: "Enkoder <", r: "Enkoder >", b: "Enkoder OK" }[encWhich]
+    : `Klawisz ${keyIdx + 1}`;
+  const tresc = assignment ? skrocSekwencje(assignment.a) : "brak akcji";
+  drawOled(label, tresc);
+
+  const capEl = encWhich
+    ? document.querySelector(`.enc-zone[data-enc="${encWhich}"]`)
+    : document.querySelectorAll("#key-grid .key-cap")[keyIdx];
+  if (capEl) {
+    capEl.classList.add("is-pressed");
+    setTimeout(() => capEl.classList.remove("is-pressed"), 120);
+  }
+
+  oledFlashTimeout = setTimeout(idleOled, 900);
+}
+
+// ---------------------------------------------------------------------
+// Eksport / import
+// ---------------------------------------------------------------------
+document.getElementById("btn-export").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "makropad-config.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// Sprawdza kształt jednego przypisania (klawisz albo akcja enkodera).
+// null jest dozwolony (oznacza "nieprzypisany"). Zwraca true/false.
+function walidujPrzypisanie(a) {
+  if (a === null) return true;
+  if (!a || typeof a !== "object") return false;
+  if (typeof a.m !== "number") return false;
+  if (!Array.isArray(a.a) || a.a.length === 0) return false;
+  if (!a.a.every(step => step && typeof step === "object" &&
+      typeof step.t === "number" && typeof step.c === "string")) return false;
+  if (!a.d || typeof a.d.mn !== "number" || typeof a.d.mx !== "number") return false;
+  return true;
+}
+
+// Sprawdza cały wczytywany config zgodnie ze schematem z docs/06-architektura-i-json.md.
+// Zwraca null, gdy wszystko OK, albo tekst opisujący pierwszy znaleziony problem.
+function walidujConfig(parsed) {
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return "dokument nie jest obiektem JSON";
+  }
+  if (!Array.isArray(parsed.ly) || parsed.ly.length === 0) {
+    return "brak pola \"ly\" (tablica warstw) albo jest puste";
+  }
+  for (let i = 0; i < parsed.ly.length; i++) {
+    const ly = parsed.ly[i];
+    const gdzie = `warstwa ${i + 1}`;
+    if (!ly || typeof ly !== "object") return `${gdzie}: nie jest obiektem`;
+    if (typeof ly.n !== "string") return `${gdzie}: brak pola "n" (nazwa warstwy)`;
+    if (!Array.isArray(ly.k) || ly.k.length !== 10) {
+      return `${gdzie}: pole "k" musi być tablicą dokładnie 10 elementów (ma ${Array.isArray(ly.k) ? ly.k.length : "brak"})`;
+    }
+    for (let j = 0; j < ly.k.length; j++) {
+      if (!walidujPrzypisanie(ly.k[j])) return `${gdzie}, klawisz ${j + 1}: niepoprawna struktura przypisania`;
+    }
+    if (!ly.enc || typeof ly.enc !== "object") return `${gdzie}: brak pola "enc"`;
+    for (const which of ["l", "r", "b"]) {
+      if (!walidujPrzypisanie(ly.enc[which])) return `${gdzie}, enkoder „${which}”: niepoprawna struktura przypisania`;
+    }
+  }
+  return null;
+}
+
+document.getElementById("btn-import").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    let parsed;
+    try {
+      parsed = JSON.parse(reader.result);
+    } catch (err) {
+      alert("Nie udało się wczytać pliku: niepoprawny JSON (" + err.message + ")");
+      return;
+    }
+    const problem = walidujConfig(parsed);
+    if (problem) {
+      alert("Nie udało się wczytać pliku: " + problem);
+      return;
+    }
+    // Zabezpieczenie: nawet jeśli walidacja przepuści coś, co wywali się dopiero
+    // przy renderowaniu, wracamy do poprzedniego stanu zamiast zostawiać UI
+    // w połowie odbudowany.
+    const poprzedniStan = state;
+    const poprzedniaWarstwa = currentLayer;
+    const poprzednieZaznaczenie = selected;
+    try {
+      state = parsed;
+      currentLayer = 0;
+      selected = { type: "key", idx: 0 };
+      renderAll();
+    } catch (err) {
+      state = poprzedniStan;
+      currentLayer = poprzedniaWarstwa;
+      selected = poprzednieZaznaczenie;
+      try { renderAll(); } catch (e2) { /* stan sprzed importu też się nie renderuje — nic więcej nie zrobimy */ }
+      alert("Import nie powiódł się przy renderowaniu (" + err.message + "). Przywrócono poprzedni stan.");
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
+});
+
+document.getElementById("btn-copy").addEventListener("click", async () => {
+  const txt = JSON.stringify(state, null, 2);
+  try {
+    await navigator.clipboard.writeText(txt);
+    const btn = document.getElementById("btn-copy");
+    const orig = btn.textContent;
+    btn.textContent = "Skopiowano ✓";
+    setTimeout(() => (btn.textContent = orig), 1200);
+  } catch {
+    alert("Nie udało się skopiować — skopiuj ręcznie z podglądu.");
+  }
+});
+
+document.getElementById("btn-add-step").addEventListener("click", () => {
+  const byloPuste = !getSelectedAssignment();
+  const a = ensureAssignment();
+  // pustePrzypisanie() już zawiera jeden pusty krok — przy zakładaniu
+  // przypisania od zera nie dokładamy drugiego, tylko zostawiamy ten.
+  if (!byloPuste) a.a.push({ t: 0, c: "" });
+  renderAll();
+});
+
+document.getElementById("btn-clear").addEventListener("click", () => {
+  const puste = !getSelectedAssignment();
+  setSelectedAssignment(puste ? pustePrzypisanie() : null);
+  renderAll();
+});
+
+// ---------------------------------------------------------------------
+// Krok 2: Web Serial — I/O (navigator.serial, pętla odczytu, logowanie)
+//
+// Budowanie/parsowanie ramek (ramkaPing, ramkaGetConfig, ramkaSetLayer,
+// ramkaSave, ramkaSetActive, podzielNaLinie, zlozKonfigZWarstw) mieszka
+// w protocol.js — bez DOM-owych zależności, więc jest przetestowane samym
+// Node w protocol.test.mjs, niezależnie od reszty tej strony.
+// ---------------------------------------------------------------------
+const serial = {
+  port: null,
+  writer: null,
+  reader: null,
+  buforOdczytu: "",
+  polaczony: false,
+  oczekujaceWarstwy: [],
+};
+
+function wspieraneWebSerial() { return "serial" in navigator; }
+
+function logSerial(kierunek, tekst) {
+  const el = document.getElementById("serial-log");
+  const linia = document.createElement("div");
+  linia.textContent = `${kierunek} ${tekst}`;
+  if (kierunek === "•") linia.className = "text-amber-400";
+  el.appendChild(linia);
+  while (el.childNodes.length > 300) el.removeChild(el.firstChild);
+  el.scrollTop = el.scrollHeight;
+}
+
+async function wyslijRamke(obj) {
+  if (!serial.writer) return;
+  try {
+    await serial.writer.write(new TextEncoder().encode(JSON.stringify(obj) + "\n"));
+    logSerial("→", JSON.stringify(obj));
+  } catch (err) {
+    logSerial("•", "Nie udało się wysłać: " + err.message);
+  }
+}
+
+function ustawStanPolaczenia(polaczony, etykieta) {
+  serial.polaczony = polaczony;
+  const badge = document.getElementById("conn-badge");
+  badge.textContent = polaczony ? `⏺ ${etykieta || "Połączono"}` : "⏺ Niepodłączono";
+  badge.className = "text-xs px-2 py-1 rounded-full border " +
+    (polaczony
+      ? "bg-emerald-500/10 text-emerald-300 border-emerald-600"
+      : "bg-slate-800 text-slate-400 border-slate-700");
+  document.getElementById("btn-connect").textContent = polaczony ? "Rozłącz" : "Połącz z urządzeniem";
+  if (!polaczony) document.getElementById("fw-badge").textContent = "";
+  ["btn-get-config", "btn-send-layer", "btn-send-all", "btn-save-device", "btn-set-active"]
+    .forEach(id => { document.getElementById(id).disabled = !polaczony; });
+}
+
+async function polaczSerial() {
+  if (!wspieraneWebSerial()) {
+    alert("Web Serial API jest dostępne tylko w Chrome/Edge/Operze (desktop), na stronie po HTTPS " +
+          "(GitHub Pages spełnia to automatycznie). Otwarcie pliku lokalnie może nie wystarczyć w każdej przeglądarce.");
+    return;
+  }
+  try {
+    const port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 115200 });
+    serial.port = port;
+    serial.writer = port.writable.getWriter();
+    serial.buforOdczytu = "";
+    ustawStanPolaczenia(true);
+    logSerial("•", "Połączono, 115200 bd.");
+    petlaOdczytu(port); // działa w tle, nie czekamy na jej zakończenie
+    await wyslijRamke(ramkaPing());
+  } catch (err) {
+    logSerial("•", "Błąd połączenia: " + err.message);
+    await rozlaczSerial();
+  }
+}
+
+async function rozlaczSerial(powod) {
+  try { if (serial.reader) { await serial.reader.cancel().catch(() => {}); serial.reader.releaseLock(); } } catch {}
+  try { if (serial.writer) { serial.writer.releaseLock(); } } catch {}
+  try { if (serial.port) await serial.port.close(); } catch {}
+  serial.port = null;
+  serial.writer = null;
+  serial.reader = null;
+  ustawStanPolaczenia(false);
+  if (powod) logSerial("•", powod);
+}
+
+async function petlaOdczytu(port) {
+  const dekoder = new TextDecoderStream();
+  port.readable.pipeTo(dekoder.writable).catch(() => {});
+  serial.reader = dekoder.readable.getReader();
+  try {
+    while (true) {
+      const { value, done } = await serial.reader.read();
+      if (done) break;
+      if (value) {
+        const wynik = podzielNaLinie(serial.buforOdczytu, value);
+        serial.buforOdczytu = wynik.bufor;
+        wynik.linie.forEach(obsluzPrzychodzaca);
+      }
+    }
+  } catch (err) {
+    logSerial("•", "Połączenie przerwane: " + err.message);
+  } finally {
+    if (serial.polaczony) await rozlaczSerial("Urządzenie rozłączone.");
+  }
+}
+
+function obsluzPrzychodzaca(linia) {
+  logSerial("←", linia);
+  let msg;
+  try {
+    msg = JSON.parse(linia);
+  } catch (err) {
+    logSerial("•", "Nie udało się sparsować odpowiedzi urządzenia jako JSON.");
+    return;
+  }
+  switch (msg.cmd) {
+    case "pong":
+      document.getElementById("fw-badge").textContent = msg.fw ? `firmware ${msg.fw}` : "";
+      break;
+    case "layer":
+      serial.oczekujaceWarstwy.push({ idx: msg.idx, data: msg.data });
+      break;
+    case "end":
+      try {
+        state = zlozKonfigZWarstw(serial.oczekujaceWarstwy, state.v, state.active);
+        currentLayer = 0;
+        selected = { type: "key", idx: 0 };
+        renderAll();
+        logSerial("•", `Wczytano ${state.ly.length} warstw z urządzenia.`);
+      } catch (err) {
+        logSerial("•", "Błąd składania configu: " + err.message);
+      }
+      serial.oczekujaceWarstwy = [];
+      break;
+    case "ack":
+      logSerial("•", msg.ok ? "OK." : "Urządzenie zwróciło błąd potwierdzenia.");
+      break;
+    case "err":
+      logSerial("•", "Błąd urządzenia: " + (msg.msg || "brak opisu"));
+      break;
+    default:
+      logSerial("•", "Nieznana komenda w odpowiedzi: " + msg.cmd);
+  }
+}
+
+if (wspieraneWebSerial()) {
+  navigator.serial.addEventListener("disconnect", (e) => {
+    if (serial.port && e.target === serial.port) rozlaczSerial("Urządzenie zostało odłączone fizycznie.");
+  });
+} else {
+  const btn = document.getElementById("btn-connect");
+  btn.disabled = true;
+  btn.title = "Web Serial API jest dostępne tylko w Chrome/Edge/Operze (desktop), po HTTPS.";
+}
+
+document.getElementById("btn-connect").addEventListener("click", () => {
+  if (serial.polaczony) rozlaczSerial("Rozłączono ręcznie.");
+  else polaczSerial();
+});
+
+document.getElementById("btn-get-config").addEventListener("click", () => {
+  serial.oczekujaceWarstwy = [];
+  wyslijRamke(ramkaGetConfig());
+});
+
+document.getElementById("btn-send-layer").addEventListener("click", () => {
+  wyslijRamke(ramkaSetLayer(currentLayer, layer()));
+});
+
+document.getElementById("btn-send-all").addEventListener("click", async () => {
+  for (let i = 0; i < state.ly.length; i++) {
+    await wyslijRamke(ramkaSetLayer(i, state.ly[i]));
+  }
+});
+
+document.getElementById("btn-save-device").addEventListener("click", () => {
+  wyslijRamke(ramkaSave());
+});
+
+document.getElementById("btn-set-active").addEventListener("click", () => {
+  wyslijRamke(ramkaSetActive(currentLayer));
+});
+
+// ---------------------------------------------------------------------
+// Render — wszystko naraz
+// ---------------------------------------------------------------------
+function renderAll() {
+  renderLayerTabs();
+  renderOledSub();
+  renderKeyGrid();
+  renderEncZones();
+  renderEditor();
+  renderJson();
+  idleOled();
+}
+
+renderAll();
+</script>
+</body>
+</html>

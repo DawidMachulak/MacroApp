@@ -1,0 +1,27 @@
+pin,uklad,funkcja,dokad,kolor,uwagi
+3V3,XIAO,zasilanie 3.3V,VCC OLED + PCF8574 + KY-040,czerwony,przez skretke lutowana
+GND,XIAO,masa,GND wszystkich modulow + lancuch klawiszy,czarny,druga skretka lutowana
+D0,XIAO,enkoder CLK,KY-040 CLK,fioletowy,INPUT_PULLUP
+D1,XIAO,enkoder DT,KY-040 DT,fioletowy,INPUT_PULLUP
+D2,XIAO,enkoder SW,KY-040 SW,fioletowy,INPUT_PULLUP; modul nie ma tu podciagniecia
+D3,XIAO,przerwanie z ekspandera,PCF8574 INT,zielony,otwarty dren aktywny stanem niskim
+D4,XIAO,I2C SDA,OLED SDA -> PCF8574 SDA,niebieski,lancuchem przez pole OLED
+D5,XIAO,I2C SCL,OLED SCL -> PCF8574 SCL,zolty,lancuchem przez pole OLED
+D6,XIAO,klawisz 9,prawa nozka klawisza 9,fioletowy,INPUT_PULLUP
+D7,XIAO,klawisz 10,prawa nozka klawisza 10,fioletowy,INPUT_PULLUP
+D8,XIAO,wolny,-,-,rezerwa np. brzeczyk
+D9,XIAO,wolny,-,-,rezerwa np. dioda statusu
+D10,XIAO,wolny,-,-,rezerwa
+BAT+,XIAO,zasilanie z akumulatora,SS12C40 nozka skrajna,pomaranczowy,pole na spodzie plytki
+BAT-,XIAO,masa akumulatora,akumulator minus,czarny,pole na spodzie plytki
+P0,PCF8574,klawisz 1,prawa nozka klawisza 1,bialy,
+P1,PCF8574,klawisz 2,prawa nozka klawisza 2,bialy,
+P2,PCF8574,klawisz 3,prawa nozka klawisza 3,bialy,
+P3,PCF8574,klawisz 4,prawa nozka klawisza 4,bialy,
+P4,PCF8574,klawisz 5,prawa nozka klawisza 5,bialy,
+P5,PCF8574,klawisz 6,prawa nozka klawisza 6,bialy,
+P6,PCF8574,klawisz 7,prawa nozka klawisza 7,bialy,
+P7,PCF8574,klawisz 8,prawa nozka klawisza 8,bialy,
+A0,PCF8574,adres,GND na tym samym module,czarny,ustawia adres 0x20
+A1,PCF8574,adres,GND na tym samym module,czarny,ustawia adres 0x20
+A2,PCF8574,adres,GND na tym samym module,czarny,ustawia adres 0x20

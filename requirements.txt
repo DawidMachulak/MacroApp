@@ -1,0 +1,9 @@
+# Do analizy plikow STL (tools/analiza_stl.py)
+numpy
+trimesh
+shapely
+rtree
+
+# Do renderowania instrukcji do PDF (tools/render_pdf.py)
+# po instalacji wykonaj jeszcze: playwright install chromium
+playwright

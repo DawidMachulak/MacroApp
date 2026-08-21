@@ -1,0 +1,36 @@
+<svg viewBox="0 0 680 375" xmlns="http://www.w3.org/2000/svg">
+<g font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="bold" fill="#1b1b19" text-anchor="middle">
+<text x="182" y="56">Pokrywa</text><text x="497" y="56">Dół</text></g>
+<rect x="40" y="70" width="285" height="228" rx="12" fill="#faf9f5" stroke="#8a8880" stroke-width="1"/>
+<g fill="#eef0ec" stroke="#0f3b30" stroke-width="0.8">
+<rect x="61.8" y="196.7" width="36.4" height="36.4" rx="4"/><rect x="113.8" y="196.7" width="36.4" height="36.4" rx="4"/>
+<rect x="165.8" y="196.7" width="36.4" height="36.4" rx="4"/><rect x="217.8" y="196.7" width="36.4" height="36.4" rx="4"/>
+<rect x="269.8" y="196.7" width="36.4" height="36.4" rx="4"/>
+<rect x="61.8" y="248.7" width="36.4" height="36.4" rx="4"/><rect x="113.8" y="248.7" width="36.4" height="36.4" rx="4"/>
+<rect x="165.8" y="248.7" width="36.4" height="36.4" rx="4"/><rect x="217.8" y="248.7" width="36.4" height="36.4" rx="4"/>
+<rect x="269.8" y="248.7" width="36.4" height="36.4" rx="4"/></g>
+<g font-family="DejaVu Sans, sans-serif" font-size="12" fill="#1b1b19" text-anchor="middle">
+<text x="80" y="219">1</text><text x="132" y="219">2</text><text x="184" y="219">3</text><text x="236" y="219">4</text><text x="288" y="219">5</text>
+<text x="80" y="271">6</text><text x="132" y="271">7</text><text x="184" y="271">8</text><text x="236" y="271">9</text><text x="288" y="271">10</text></g>
+<rect x="105.8" y="101" width="117" height="49.4" rx="4" fill="#dcece5" stroke="#0f3b30" stroke-width="0.8"/>
+<text x="164" y="130" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">OLED</text>
+<circle cx="286" cy="136" r="9" fill="#dcece5" stroke="#0f3b30" stroke-width="0.8"/>
+<text x="286" y="167" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">KY-040</text>
+<rect x="43" y="94" width="28" height="21" rx="3" fill="#fbf0df" stroke="#c8622f" stroke-width="0.8"/>
+<text x="62" y="87" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">SS12C40</text>
+<circle cx="106" cy="241" r="6" fill="#fff" stroke="#8a8880" stroke-width="0.8"/>
+<circle cx="262" cy="241" r="6" fill="#fff" stroke="#8a8880" stroke-width="0.8"/>
+<rect x="355" y="70" width="285" height="228" rx="12" fill="#faf9f5" stroke="#8a8880" stroke-width="1"/>
+<rect x="407" y="75" width="169" height="104" rx="4" fill="none" stroke="#8a8880" stroke-width="0.8" stroke-dasharray="4 3"/>
+<rect x="420" y="85" width="130" height="88" rx="4" fill="#fbf0df" stroke="#c8622f" stroke-width="0.8"/>
+<text x="485" y="133" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">Akumulator</text>
+<rect x="360" y="140" width="45" height="55" rx="4" fill="#e9e8f6" stroke="#6a5fc6" stroke-width="0.8"/>
+<text x="382" y="171" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">XIAO</text>
+<rect x="430" y="215" width="94" height="68" rx="4" fill="#e9e8f6" stroke="#6a5fc6" stroke-width="0.8"/>
+<text x="477" y="253" font-family="DejaVu Sans, sans-serif" font-size="12" text-anchor="middle" fill="#1b1b19">PCF8574</text>
+<circle cx="421" cy="241" r="6" fill="#fff" stroke="#8a8880" stroke-width="0.8"/>
+<circle cx="577" cy="241" r="6" fill="#fff" stroke="#8a8880" stroke-width="0.8"/>
+<g font-family="DejaVu Sans, sans-serif" font-size="12" fill="#5a5a54">
+<text x="40" y="329">Pokrywa: 10 × MX w rastrze 20 mm, OLED w kołnierzu, enkoder, wyłącznik</text>
+<text x="40" y="351">Dół: akumulator w komorze, XIAO przy lewej ścianie, PCF8574 na dnie pod klawiszami</text></g>
+</svg>

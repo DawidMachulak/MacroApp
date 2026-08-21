@@ -1,0 +1,25 @@
+lp,kategoria,element,ilosc,uwagi
+1,elektronika,Seeed XIAO nRF52840 (BLE),1,mozg ukladu; wbudowana ladowarka Li-Po
+2,elektronika,Modul PCF8574 (ekspander I2C),1,bez zworek i goldpinow; adres 0x20 po zwarciu A0-A2 do GND
+3,elektronika,Wyswietlacz OLED 0.91 cala SSD1306 I2C,1,128x32 px; adres 0x3C
+4,elektronika,Enkoder obrotowy KY-040,1,bez goldpinow; CLK DT SW + GND
+5,elektronika,Przelacznik mechaniczny MX,10,do wyciec 14x14 mm; raster 20 mm
+6,elektronika,Przelacznik suwakowy SS12C40 ON-ON,1,uzywasz srodkowej i jednej skrajnej nozki
+7,elektronika,Akumulator Li-Po LP803450 3.7V 1500mAh,1,z PCM; wtyk JST 2.54 (XH); 50x34x8 mm
+8,mechanika,Keycapy MX,10,raster w obudowie 20 mm
+9,mechanika,Wydruk 3D: Dol.stl,1,109.8 x 87.75 x 12 mm
+10,mechanika,Wydruk 3D: Lid_final.stl,1,plyta pod klawisze 2.4 mm
+11,mechanika,Wtopka mosiezna M3 (otwor 4.2 mm dl. 4-5 mm),2,gwint w slupkach dna
+12,mechanika,Sruba M3 x 10 mm leb stozkowy,2,skrecenie obudowy
+13,materialy,Przewod silikonowy 30 AWG min. 4 kolory,5 m,cala wiazka; silikon nie PVC
+14,materialy,Przewod silikonowy 26 AWG czerwony i czarny,2x20 cm,wylacznik i akumulator
+15,materialy,Koszulka termokurczliwa 1.5 mm,30 cm,izolacja polaczen
+16,materialy,Koszulka termokurczliwa 2.5 mm,30 cm,izolacja przy akumulatorze
+17,materialy,Tasma Kaptonowa lub izolacyjna waska,1 rolka,sklejanie wiazki w plaska tasme
+18,materialy,Tasma dwustronna / klej na goraco,1,mocowanie modulow i kotwice wiazki
+19,opcjonalne,Gniazdo JST XH 2.54 2-pin z przewodami,1,zeby dalo sie odpiac akumulator
+20,opcjonalne,Kondensator ceramiczny 100 nF,2,filtr na CLK i DT enkodera
+21,opcjonalne,Zlacze JST-PH 2.0 2x10 pin,1,przerwa serwisowa w wiazce
+22,narzedzia,Multimetr z brzeczykiem,1,niezbedny do testow ciaglosci
+23,narzedzia,Lutownica z cienkim grotem + cyna 0.5-0.7 mm,1,320 C do lutowania / 250 C do wtopek
+24,narzedzia,Kabel USB-C z transmisja danych,1,kabel tylko do ladowania nie zadziala

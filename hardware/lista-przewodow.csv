@@ -1,0 +1,15 @@
+grupa,opis,kolor,sztuk,dlugosc_mm,przechodzi_przez_podzial
+klawisze,Sygnaly klawiszy 1-8 do PCF8574,bialy,8,150,tak
+klawisze,Sygnaly klawiszy 9-10 do XIAO,fioletowy,2,170,tak
+klawisze,Lancuch masy miedzy klawiszami,czarny,9,30,nie
+klawisze,Masa klawiszy do dna,czarny,1,150,tak
+oled,OLED 3V3,czerwony,1,170,tak
+oled,OLED GND,czarny,1,170,tak
+oled,OLED SDA,niebieski,1,170,tak
+oled,OLED SCL,zolty,1,170,tak
+enkoder,KY-040 plus,czerwony,1,170,tak
+enkoder,KY-040 GND,czarny,1,170,tak
+enkoder,KY-040 CLK DT SW,fioletowy,3,170,tak
+zasilanie,Wylacznik SS12C40 (tor BAT+),pomaranczowy 26AWG,2,130,tak
+i2c,PCF8574 do XIAO: 3V3 GND SDA SCL INT,mieszane,5,70,nie
+adres,PCF8574 A0 A1 A2 do GND,czarny,3,15,nie
